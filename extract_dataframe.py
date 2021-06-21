@@ -43,8 +43,13 @@ class TweetDfExtractor:
         return statuses_count
 
     def find_full_text(self) -> list:
-        full_text = [x['retweeted_status']['extended_tweet']['full_text']
-                     for x in self.tweets_list]
+        full_text = []
+        for tweet in self.tweets_list:
+            try:
+                full_text.append(
+                    tweet["retweeted_status"]['extended_tweet']['full_text'])
+            except KeyError:
+                full_text.append("")
 
         return full_text
 
@@ -53,9 +58,22 @@ class TweetDfExtractor:
 
         return original_text
 
-    # def find_sentiments(self, text) -> list:
+    def find_sentiment(self, polarity, subjectivity) -> list:
+        sentiment = []
+        for i in range(len(polarity)):
+            sentiment.append(polarity[i] * subjectivity[i])
 
-    #     return polarity, self.subjectivity
+        return sentiment
+
+    def find_sentiments(self, text) -> list:
+        polarityList = []
+        subjectivityList = []
+        for eachText in text:
+            polarity, subjectivity = TextBlob(eachText).sentiment
+            polarityList.append(polarity)
+            subjectivityList.append(subjectivity)
+
+        return polarityList, subjectivityList
 
     def find_lang(self) -> list:
         lang = [x['lang'] for x in self.tweets_list]
@@ -76,6 +94,12 @@ class TweetDfExtractor:
         screen_name = [x['user']['screen_name'] for x in self.tweets_list]
 
         return screen_name
+
+    def find_screen_count(self) -> list:
+        screen_count = [x['user']['listed_count']
+                        for x in self.tweets_list]
+
+        return screen_count
 
     def find_followers_count(self) -> list:
         followers_count = [x['user']['followers_count']
@@ -171,20 +195,22 @@ class TweetDfExtractor:
         source = self.find_source()
         original_text = self.find_original_text()
         clean_text = self.find_full_text()
-        # polarity, subjectivity = self.find_sentiments(text)
+        polarity, subjectivity = self.find_sentiments(clean_text)
+        sentiment = self.find_sentiment(polarity, subjectivity)
         lang = self.find_lang()
-        fav_count = self.find_favourite_count()
+        favorite_count = self.find_favourite_count()
         retweet_count = self.find_retweet_count()
         original_author = self.find_screen_name()
-        follower_count = self.find_followers_count()
+        screen_count = self.find_screen_count()
+        followers_count = self.find_followers_count()
         friends_count = self.find_friends_count()
         possibly_sensitive = self.is_sensitive()
         hashtags = self.find_hashtags()
         user_mentions = self.find_mentions()
         place = self.find_location()
         place_coord_boundaries = self.find_coordinates()
-        data = zip(created_at, source, original_text, clean_text, lang, fav_count, retweet_count,
-                   original_author, follower_count, friends_count, possibly_sensitive, hashtags, user_mentions, place, place_coord_boundaries)
+        data = zip(created_at, source, original_text, polarity, subjectivity, lang, favorite_count, retweet_count,
+                   original_author, followers_count, friends_count, possibly_sensitive, hashtags, user_mentions, place)
         df = pd.DataFrame(data=data, columns=columns)
 
         if save:
