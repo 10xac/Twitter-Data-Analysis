@@ -14,6 +14,7 @@ def read_json(json_file: str)->list:
     length of the json file and a list of json
     """
     
+
     tweets_data = []
     for tweets in open(json_file,'r'):
         tweets_data.append(json.loads(tweets))
@@ -34,34 +35,34 @@ class TweetDfExtractor:
         self.tweets_list = tweets_list
 
     # an example function
-    def find_statuses_count(self)->list:
-        statuses_count 
-        
+    def find_statuses_count(self) -> list:
+            # self.statuses_count = self.tweets_list.statuses_count
+            return [tweet['user']['statuses_count'] for tweet in self.tweets_list]
     def find_full_text(self)->list:
-        text = 
+        text = self.find_full_text()
        
     
     def find_sentiments(self, text)->list:
         
-        return polarity, self.subjectivity
+        return self.polarity, self.subjectivity
 
     def find_created_time(self)->list:
        
-        return created_at
+        return self.tweets_list['user']['created']
 
     def find_source(self)->list:
-        source = 
+        source = self.find_source()
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = self.find_screen_name()
 
     def find_followers_count(self)->list:
-        followers_count = 
+        followers_count = self.find_followers_count()
 
     def find_friends_count(self)->list:
-        friends_count = 
+        friends_count = self.find_friends_count()
 
     def is_sensitive(self)->list:
         try:
@@ -72,16 +73,25 @@ class TweetDfExtractor:
         return is_sensitive
 
     def find_favourite_count(self)->list:
-        
+        favourite_count = self.find_favourite_count()
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+        retweet_count = self.find_retweet_count()
 
     def find_hashtags(self)->list:
-        hashtags =
+        try:
+            hashtags = self.tweets_list['user_hashtags']
+        except TypeError:
+            hashtags = ''
+        return hashtags
+
 
     def find_mentions(self)->list:
-        mentions = 
+        try:
+            mentions = self.tweets_list['user_mentions']
+        except TypeError:
+            mentions = ''
+        return mentions
 
 
     def find_location(self)->list:
