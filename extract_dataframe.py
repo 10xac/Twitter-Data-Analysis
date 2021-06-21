@@ -79,20 +79,13 @@ class TweetDfExtractor:
         retweet_count = self.find_retweet_count()
 
     def find_hashtags(self)->list:
-        try:
-            hashtags = self.tweets_list['user_hashtags']
-        except TypeError:
-            hashtags = ''
-        return hashtags
+            hashtags =  [x['extended_tweet']['entities']['hashtags'] for x in self.tweets_list]
+            return hashtags
 
 
     def find_mentions(self)->list:
-        try:
-            mentions = self.tweets_list['user_mentions']
-        except TypeError:
-            mentions = ''
-        return mentions
-
+            mentions =  [x['extended_tweet']['entities']['user_mentions'] for x in self.tweets_list]
+            return mentions
 
     def find_location(self)->list:
             try:
