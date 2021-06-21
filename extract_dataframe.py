@@ -17,8 +17,7 @@ def read_json(json_file: str)->list:
     tweets_data = []
     for tweets in open(json_file,'r'):
         tweets_data.append(json.loads(tweets))
-    
-    
+      
     return len(tweets_data), tweets_data
 
 class TweetDfExtractor:
@@ -48,7 +47,6 @@ class TweetDfExtractor:
         full_text = ''.join(filtered_text)
         return full_text
        
-    
     def find_sentiments(self, text)->list:
         polarity = []
         subjectivity = []
@@ -60,7 +58,6 @@ class TweetDfExtractor:
                 subjectivity.append(result.subjectivity)
         
         return polarity, subjectivity
-
 
     def find_created_time(self)->list:
         created_at = self.get_column_values('created_at')
@@ -94,7 +91,6 @@ class TweetDfExtractor:
         favorite_count = [x.get('retweeted_status', {}).get('favorite_count',0) for x in self.tweets_list]
         return favorite_count
         
-    
     def find_retweet_count(self)->list:
         retweet_count = [(x.get('retweeted_status',{})).get('retweet_count', None) for x in self.tweets_list]
         return retweet_count
@@ -107,7 +103,6 @@ class TweetDfExtractor:
         mentions = self.get_column_values('mentions')
         return mentions
 
-
     def find_location(self)->list:
         try:
             location = [(x.get('user', {})).get('location', None) for x in self.tweets_list]
@@ -119,7 +114,6 @@ class TweetDfExtractor:
     def find_lang(self) -> list:
         lang = self.get_column_values('lang')
         return lang
-        
         
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
@@ -151,8 +145,7 @@ class TweetDfExtractor:
             print('File Successfully Saved.!!!')
         
         return df
-
-                
+ 
 if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
