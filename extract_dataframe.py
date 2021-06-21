@@ -35,10 +35,15 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count 
+        statuses_count = self.tweets_list['quote_count']['reply_count']
         
     def find_full_text(self)->list:
-        text = 
+        try:
+            text = self.tweets_list['text']
+        except TypeError:
+            text = ''
+        
+        return text
        
     
     def find_sentiments(self, text)->list:
@@ -46,20 +51,20 @@ class TweetDfExtractor:
         return polarity, self.subjectivity
 
     def find_created_time(self)->list:
-       
+        created_at = self.tweets_list['created_at']
         return created_at
 
     def find_source(self)->list:
-        source = 
-
+       
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = self.tweets_list['user']
+        return screen_name
 
     def find_followers_count(self)->list:
-        followers_count = 
-
+        return followers_count 
+    
     def find_friends_count(self)->list:
         friends_count = 
 
@@ -72,17 +77,20 @@ class TweetDfExtractor:
         return is_sensitive
 
     def find_favourite_count(self)->list:
-        
+        favourite_count = self.tweets_list['favourite_count']
+        return favourite_count
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+        retweet_count = self.tweets_list['retweet_count']
+        return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags =
+        hashtags =  [x['#'] for x in self.tweets_list]
+        return hashtags
 
     def find_mentions(self)->list:
-        mentions = 
-
+        mentions = self.tweeted_list['retweeted']
+        return mentions
 
     def find_location(self)->list:
         try:
