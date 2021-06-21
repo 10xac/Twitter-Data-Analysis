@@ -55,8 +55,7 @@ class TweetDfExtractor:
         return created_at
 
     def find_source(self)->list:
-        source = self.tweets_list['source']
-
+       
         return source
 
     def find_screen_name(self)->list:
@@ -64,8 +63,8 @@ class TweetDfExtractor:
         return screen_name
 
     def find_followers_count(self)->list:
-        followers_count = self.tweets_list['followers_count']
-
+        return followers_count 
+    
     def find_friends_count(self)->list:
         friends_count = 
 
