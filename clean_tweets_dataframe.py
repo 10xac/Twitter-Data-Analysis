@@ -50,6 +50,6 @@ class Clean_Tweets:
         """
         remove non english tweets from lang
         """
-        df = df['text'].map(lambda x:x.isascii())
+        df = df['lang'].map(lambda x:x.isascii())
         
         return df
