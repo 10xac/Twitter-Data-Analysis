@@ -38,7 +38,12 @@ class TweetDfExtractor:
         return statuses_count
         
     def find_full_text(self)->list:
-        texts = [current_tweet['retweeted_status']['extended_tweet']['full_text'] for current_tweet in self.tweets_list]
+        texts = []
+        for t in self.tweets_list:
+            if 'retweeted_status' in t and 'extended_tweet' in t['retweeted_status']:
+                texts.append(t['retweeted_status']['extended_tweet']['full_text'])
+            else:
+                texts.append(t['text'])
         return texts
        
 #############################################
@@ -84,11 +89,21 @@ class TweetDfExtractor:
         return sensitivity
 ###################################################
     def find_favourite_count(self)->list:
-        favourites_count = [t['retweeted_status']['favorite_count'] for t in self.tweets_list]
+        favourites_count = []
+        for t in self.tweets_list:
+            if 'retweeted_status' in t:
+                favourites_count.append(t['retweeted_status']['favorite_count'])
+            else:
+                favourites_count.append(t['favorite_count'])
         return favourites_count
     
     def find_retweet_count(self)->list:
-        retweet_count = [t['retweeted_status']['retweet_count'] for t in self.tweets_list]
+        retweet_count = []
+        for t in self.tweets_list:
+            if 'retweeted_status' in t:
+                retweet_count.append(t['retweeted_status']['retweet_count'])
+            else:
+                retweet_count.append(t['retweet_count'])
         return retweet_count
 
     def find_hashtags(self)->list:
@@ -105,7 +120,6 @@ class TweetDfExtractor:
         for t in self.tweets_list:
             try:
                 location = t['user']['location']
-                print(location)
             except TypeError:
                 location = ''
             locations.append(location)
