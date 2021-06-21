@@ -7,7 +7,7 @@ class Clean_Tweets:
         print('Automation in Action...!!!')
         
     def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:
-        """
+        """ 
         remove rows that has column names. This error originated from
         the data collection stage.  
         """
@@ -20,17 +20,15 @@ class Clean_Tweets:
         """
         drop duplicate rows
         """
-        
-        ---
-        
+        df.drop_duplicates(keep=False, inplace=False)
+        # df=df.drop_duplicates(['full_text']) testing codes 
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        ----
-        
-        ----
+        df['col'] = pd.to_datetime(df['col'])
+
         
         df = df[df['created_at'] >= '2020-12-31' ]
         
