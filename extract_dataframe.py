@@ -56,7 +56,7 @@ class TweetDfExtractor:
                     subjectivity.append(result.subjectivity)
             
             return polarity, subjectivity
-            
+
     def find_created_time(self) -> list:
         # print([tweet['created_at'] for tweet in self.tweets_list])
         return [tweet['created_at'] for tweet in self.tweets_list]
@@ -67,37 +67,43 @@ class TweetDfExtractor:
         return source
 
     def find_screen_name(self)->list:
-        screen_name = [tweet['screen_name'] if 'screen_name' in tweet else " "for tweet in self.tweets_list]
-        return screen_name
+            screen_name = [tweet['screen_name'] if 'screen_name' in tweet else " "for tweet in self.tweets_list]
+            return screen_name
     def find_followers_count(self)->list:
-        followers_count = [tweet['user']['followers_count'] for tweet in self.tweets_list]
+        followers_count = [tweet['user']['followers_count'] if 'user'
+                            in x else '' for x in self.tweets_list]
         return followers_count
 
     def find_friends_count(self)->list:
-        friends_count = [tweet['user']['friends_count'] for tweet in self.tweets_list]
+        friends_count = [tweet['user']['friends_count'] if 'user'
+                            in x else '' for x in self.tweets_list]
         return friends_count
 
     def is_sensitive(self)->list:
         try:
-            is_sensitive = [x['retweeted_status']['possibly_sensitive'] for x in self.tweets_list]
+            is_sensitive = [x['retweeted_status']['possibly_sensitive'] if 'retweeted_status'
+                            in x else '' for x in self.tweets_list]
         except KeyError:
             is_sensitive = None
 
         return is_sensitive
 
-    def find_favourite_count(self)->list:
+    def find_favourite_count(self)->list: 
         try:
-            favorites_count = [x['retweeted_status']['favorite_count'] for x in self.tweets_list]
+            favorites_count = [x['user']['favourites_count'] if 'user'
+                            in x else '' for x in self.tweets_list]
         except KeyError:
             favorites_count = None
 
         return favorites_count
 
-    def find_retweet_count(self)->list:
-        retweet_count =  [x['retweeted_status']['retweet_count'] for x in self.tweets_list]
-        return retweet_count
-    def find_hashtags(self)->list:
-            hashtags =  [x['extended_tweet']['entities']['hashtags'] for x in self.tweets_list]
+    def find_retweet_count(self) -> list:
+            retweet_count = [x['retweeted_status']['retweet_count'] if 'retweeted_status'
+                            in x else '' for x in self.tweets_list]
+            return retweet_count
+    def find_hashtags(self) -> list:
+            hashtags = [x['retweeted_status']['extended_tweet']['entities']['hashtags'] if ('retweeted_status'
+                        in x) and ('extended_tweet' in x['retweeted_status']) else '' for x in self.tweets_list]
             return hashtags
 
 
@@ -125,7 +131,7 @@ class TweetDfExtractor:
         created_at = self.find_created_time()
         source = self.find_source()
         text = self.find_full_text()
-        # polarity, subjectivity = self.find_sentiments(text)
+        polarity, subjectivity = self.find_sentiments(text)
         # lang = self.find_lang()
         fav_count = self.find_favourite_count()
         retweet_count = self.find_retweet_count()
