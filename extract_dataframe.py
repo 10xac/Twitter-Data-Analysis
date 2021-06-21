@@ -38,30 +38,75 @@ class TweetDfExtractor:
         statuses_count 
         
     def find_full_text(self)->list:
-        text = 
+        text = []
+        for x in self.tweets_list:
+            if 'retweeted_status' in x:
+                if 'extended_tweet' in x['retweeted_status']:
+                    text.append(x['retweeted_status']['extended_tweet']['full_text'])
+                else:
+                    text.append(x['retweeted_status']['text'])
+            else:
+                text.append(x['text'])
+        return text
        
     
     def find_sentiments(self, text)->list:
-        
+        polarity = []
+        for x in self.tweets_list:
+            if 'retweeted_status' in x:
+                if 'extended_tweet' in x['retweeted_status']:
+                    polarity.append(x['retweeted_status']['extended_tweet']['polarity'])
+                else:
+                    polarity.append(x['retweeted_status']['polarity'])
+            else:
+                polarity.append(x['polarity'])
         return polarity, self.subjectivity
 
     def find_created_time(self)->list:
+        created_at = []
+        for x in self.tweets_list:
+            if 'retweeted_status' in x:
+                if 'extended_tweet' in x['retweeted_status']:
+                    created_at.append(x['retweeted_status']['extended_tweet']['created_at'])
+                else:
+                    created_at.append(x['retweeted_status']['created_at'])
+            else:
+                polarity.append(x['polarity'])        
        
         return created_at
 
     def find_source(self)->list:
-        source = 
+        source = []
+        for x in self.tweets_list:
+            if 'retweeted_status' in x:
+                if 'extended_tweet' in x['retweeted_status']:
+                    source.append(x['retweeted_status']['extended_tweet']['source'])
+                else:
+                    source.append(x['retweeted_status']['source'])
+            else:
+                source.append(x['source'])
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = []
+        for x in self.tweets_list:
+            if 'retweeted_status' in x:
+                if 'extended_tweet' in x['retweeted_status']:
+                    screen_name.append(x['retweeted_status']['extended_tweet']['screen_name'])
+                else:
+                    screen_name.append(x['retweeted_status']['screen_name'])
+            else:
+                screen_name.append(x['screen_name'])
+
+        return source
 
     def find_followers_count(self)->list:
-        followers_count = 
+        for x in self.tweets_list:
+            followers_count += x['retweeted_status']['extended_tweet']['followers_count']
 
     def find_friends_count(self)->list:
-        friends_count = 
+        friends_count += x['retweeted_status']['extended_tweet']['friends_count']
 
     def is_sensitive(self)->list:
         try:
@@ -72,16 +117,17 @@ class TweetDfExtractor:
         return is_sensitive
 
     def find_favourite_count(self)->list:
+        return x['retweeted_status']['extended_tweet']['favorite_count']
         
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+        retweet_count += x['retweeted_status']['extended_tweet']['retweet_count']
 
     def find_hashtags(self)->list:
-        hashtags =
+        hashtags += x['retweeted_status']['extended_tweet']['hashtags']
 
     def find_mentions(self)->list:
-        mentions = 
+        mentions += x['retweeted_status']['extended_tweet']['mentions']
 
 
     def find_location(self)->list:
