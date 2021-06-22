@@ -49,9 +49,8 @@ class TweetDfExtractor:
         pass
 
     def find_created_time(self)->list:
-       
-        # return created_at
-        pass
+        created_time = []
+        return created_time
 
     def find_source(self)->list:
         # source = 
