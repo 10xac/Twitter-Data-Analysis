@@ -51,92 +51,75 @@ class TweetDfExtractor:
        
     
     def find_sentiments(self, text)->list:
+        text = [x.get('retweeted_status', {}) for x in self.tweets_list]
+        extended_tweet = [x.get('extended_tweet', {}) for x in text]
+        full_text = [x.get('full_text', '') for x in extended_tweet]
+
+        sentimentedText = [TextBlob(x) for x in full_text]
         polarity = []
-        for x in self.tweets_list:
-            if 'retweeted_status' in x:
-                if 'extended_tweet' in x['retweeted_status']:
-                    polarity.append(x['retweeted_status']['extended_tweet']['polarity'])
-                else:
-                    polarity.append(x['retweeted_status']['polarity'])
-            else:
-                polarity.append(x['polarity'])
-        return polarity, self.subjectivity
+        subjectivity = []
+
+        for i in range(len(sentimentedText)):
+            polarity.append(sentimentedText[i].sentiment.polarity)
+            subjectivity.append(sentimentedText[i].sentiment.subjectivity)
+        
+        return polarity, subjectivity
 
     def find_created_time(self)->list:
-        created_at = []
-        for x in self.tweets_list:
-            if 'retweeted_status' in x:
-                if 'extended_tweet' in x['retweeted_status']:
-                    created_at.append(x['retweeted_status']['extended_tweet']['created_at'])
-                else:
-                    created_at.append(x['retweeted_status']['created_at'])
-            else:
-                polarity.append(x['polarity'])        
-       
-        return created_at
+        created_time = [x.get('created_at', None) for x in self.tweets_list]
+        return created_time
 
     def find_source(self)->list:
-        source = []
-        for x in self.tweets_list:
-            if 'retweeted_status' in x:
-                if 'extended_tweet' in x['retweeted_status']:
-                    source.append(x['retweeted_status']['extended_tweet']['source'])
-                else:
-                    source.append(x['retweeted_status']['source'])
-            else:
-                source.append(x['source'])
+        source = [x.get('source', '') for x in self.tweets_list]
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = []
-        for x in self.tweets_list:
-            if 'retweeted_status' in x:
-                if 'extended_tweet' in x['retweeted_status']:
-                    screen_name.append(x['retweeted_status']['extended_tweet']['screen_name'])
-                else:
-                    screen_name.append(x['retweeted_status']['screen_name'])
-            else:
-                screen_name.append(x['screen_name'])
-
-        return source
+        users = [x.get('user', {}) for x in self.tweets_list]
+        screen_name = [x.get('screen_name') for x in users]
+        return screen_name
 
     def find_followers_count(self)->list:
-        for x in self.tweets_list:
-            followers_count += x['retweeted_status']['extended_tweet']['followers_count']
+        followers_count = [x.get('user', {}).get('followers_count', 0) for x in self.tweets_list]
+        return followers_count
 
     def find_friends_count(self)->list:
-        friends_count += x['retweeted_status']['extended_tweet']['friends_count']
+        friends_count = [x.get('user', {}).get('friends_count', 0) for x in self.tweets_list]
+        return friends_count
 
     def is_sensitive(self)->list:
-        try:
-            is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
-        except KeyError:
-            is_sensitive = None
+        is_sensitive = [x.get('possibly_sensitive', None) for x in self.tweets_list]
 
         return is_sensitive
 
     def find_favourite_count(self)->list:
-        return x['retweeted_status']['extended_tweet']['favorite_count']
-        
+        fav_count = [x.get('retweeted_status', {}).get('favorite_count', 0) for x in self.tweets_list]
+        return fav_count
     
     def find_retweet_count(self)->list:
-        retweet_count += x['retweeted_status']['extended_tweet']['retweet_count']
+        retweeted_status = [x.get('retweeted_status', {}) for x in self.tweets_list]
+        retweet_count = [x.get('retweet_count', None) for x in retweeted_status]
+
+        return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags += x['retweeted_status']['extended_tweet']['hashtags']
+        # return list of all None
+        hashtags = [x.get('hashtags', None) for x in self.tweets_list]
+        return hashtags
 
     def find_mentions(self)->list:
-        mentions += x['retweeted_status']['extended_tweet']['mentions']
+        # retun list of all None
+        mentions = [x.get('mentions', None) for x in self.tweets_list]
+        return mentions
 
 
     def find_location(self)->list:
-        try:
-            location = self.tweets_list['user']['location']
-        except TypeError:
-            location = ''
-        
+        location = [x.get('user', {}).get('location', None) for x in self.tweets_list]
         return location
+        
+    def find_lang(self)->list:
+        lang = [x.get('retweeted_status', {}).get('lang', None) for x in self.tweets_list]
+        return lang   
 
     
         
