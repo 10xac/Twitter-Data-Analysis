@@ -39,8 +39,9 @@ class TweetDfExtractor:
         pass
         
     def find_full_text(self)->list:
-        # text = 
-        pass
+        text = [x.get('retweeted_status', {}).get('extended_tweet',{}).get('full_text', '') \
+            for x in self.tweets_list]
+        return text
        
     
     def find_sentiments(self, text)->list:
@@ -71,10 +72,7 @@ class TweetDfExtractor:
         return friends_count
 
     def is_sensitive(self)->list:
-        try:
-            is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
-        except KeyError:
-            is_sensitive = None
+        is_sensitive = [x.get('possibly_sensitive', None) for x in self.tweets_list]
 
         return is_sensitive
 
