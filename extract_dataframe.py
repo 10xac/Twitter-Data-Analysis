@@ -1,6 +1,6 @@
 import json
 import pandas as pd
-# from textblob import TextBlob
+from textblob import TextBlob # import works
 
 def read_json(json_file: str)->list:
     """
@@ -35,8 +35,9 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        # statuses_count 
-        pass
+        user = [x.get('user', {}) for x in self.tweets_list]
+        statuses_count = [x.get('statuses_count', 0) for x in user]
+        return statuses_count
         
     def find_full_text(self)->list:
         text = [x.get('retweeted_status', {}).get('extended_tweet',{}).get('full_text', '') \
@@ -45,23 +46,33 @@ class TweetDfExtractor:
        
     
     def find_sentiments(self, text)->list:
+        text = [x.get('retweeted_status', {}) for x in self.tweets_list]
+        extended_tweet = [x.get('extended_tweet', {}) for x in text]
+        full_text = [x.get('full_text', '') for x in extended_tweet]
+
+        sentimentedText = [TextBlob(x) for x in full_text]
+        polarity = []
+        subjectivity = []
+
+        for i in range(len(sentimentedText)):
+            polarity.append(sentimentedText[i].sentiment.polarity)
+            subjectivity.append(sentimentedText[i].sentiment.subjectivity)
         
-        # return polarity, self.subjectivity
-        pass
+        return polarity, subjectivity
 
     def find_created_time(self)->list:
         created_time = [x.get('created_at', None) for x in self.tweets_list]
         return created_time
 
     def find_source(self)->list:
-        # source = 
+        source = [x.get('source', '') for x in self.tweets_list]
 
-        # return source
-        pass
+        return source
 
     def find_screen_name(self)->list:
-        # screen_name = 
-        pass
+        users = [x.get('user', {}) for x in self.tweets_list]
+        screen_name = [x.get('screen_name') for x in users]
+        return screen_name
 
     def find_followers_count(self)->list:
         followers_count = [x.get('user', {}).get('followers_count', 0) for x in self.tweets_list]
@@ -81,8 +92,10 @@ class TweetDfExtractor:
         return fav_count
     
     def find_retweet_count(self)->list:
-        # retweet_count = 
-        pass
+        retweeted_status = [x.get('retweeted_status', {}) for x in self.tweets_list]
+        retweet_count = [x.get('retweet_count', None) for x in retweeted_status]
+
+        return retweet_count
 
     def find_hashtags(self)->list:
         # hashtags =
