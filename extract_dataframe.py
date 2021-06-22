@@ -49,7 +49,7 @@ class TweetDfExtractor:
         pass
 
     def find_created_time(self)->list:
-        created_time = []
+        created_time = [x.get('created_at', None) for x in self.tweets_list]
         return created_time
 
     def find_source(self)->list:
@@ -63,12 +63,12 @@ class TweetDfExtractor:
         pass
 
     def find_followers_count(self)->list:
-        # followers_count = 
-        pass
+        followers_count = [x.get('user', {}).get('followers_count', 0) for x in self.tweets_list]
+        return followers_count
 
     def find_friends_count(self)->list:
-        # friends_count = 
-        pass
+        friends_count = [x.get('user', {}).get('friends_count', 0) for x in self.tweets_list]
+        return friends_count
 
     def is_sensitive(self)->list:
         try:
@@ -79,7 +79,8 @@ class TweetDfExtractor:
         return is_sensitive
 
     def find_favourite_count(self)->list:
-        pass
+        fav_count = [x.get('retweeted_status', {}).get('favorite_count', 0) for x in self.tweets_list]
+        return fav_count
     
     def find_retweet_count(self)->list:
         # retweet_count = 
