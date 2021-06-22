@@ -22,6 +22,19 @@ class TestCleanTweetsDataframe(unittest.TestCase):
     # columns = ["created_at"]
     pass
 
+  def test_drop_duplicate(self):
+    pass
+
+  def test_convert_to_datetime(self):
+    pass
+
+  def test_convert_to_numbers(self):
+    pass
+
+  def test_remove_non_english_tweets(self):
+    pass
+
+
   
 if __name__ == '__main__':
 	unittest.main()
