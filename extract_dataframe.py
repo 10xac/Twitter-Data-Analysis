@@ -21,6 +21,7 @@ def read_json(json_file: str)->list:
     
     return len(tweets_data), tweets_data
 
+
 class TweetDfExtractor:
     """
     this function will parse tweets json into a pandas dataframe
@@ -31,98 +32,123 @@ class TweetDfExtractor:
     """
     def __init__(self, tweets_list):
         
-        self.tweets_list = tweets_list
+        self.tweets_list = tweets_list     
+
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count 
+        
+        statuses_count = []
+        for i in self.tweets_list:
+            statuses_count.append(i['user']['statuses_count'])
+        return statuses_count 
         
     def find_full_text(self)->list:
-        text = []
-        for x in self.tweets_list:
-            if 'retweeted_status' in x:
-                if 'extended_tweet' in x['retweeted_status']:
-                    text.append(x['retweeted_status']['extended_tweet']['full_text'])
-                else:
-                    text.append(x['retweeted_status']['text'])
-            else:
-                text.append(x['text'])
-        return text
-       
-    
+        text=[]
+        for i in self.tweets_list:
+            text.append(i['text'])
+            
+        return text 
     def find_sentiments(self, text)->list:
-        text = [x.get('retweeted_status', {}) for x in self.tweets_list]
-        extended_tweet = [x.get('extended_tweet', {}) for x in text]
-        full_text = [x.get('full_text', '') for x in extended_tweet]
+            polarity = []
+            subjectivity = []
 
-        sentimentedText = [TextBlob(x) for x in full_text]
-        polarity = []
-        subjectivity = []
+            for each in text:
+                if (each):
+                    result = TextBlob(str(each)).sentiment
+                    polarity.append(result.polarity)
+                    subjectivity.append(result.subjectivity)
+            
+            return polarity, subjectivity
 
-        for i in range(len(sentimentedText)):
-            polarity.append(sentimentedText[i].sentiment.polarity)
-            subjectivity.append(sentimentedText[i].sentiment.subjectivity)
-        
-        return polarity, subjectivity
+    def is_sensitive(self)->list:
+        isSensitive = []
+        for sensitive in self.tweets_list:
+            try:
+                is_sensitive = sensitive['possibly_sensitive']
+            except KeyError:
+                is_sensitive = None
+            isSensitive += [is_sensitive]
+        return isSensitive
+
+
+    def find_lang(self)->list:
+        lang = []
+        for i in self.tweets_list:
+            lang.append(i['lang'])
+        return lang
 
     def find_created_time(self)->list:
-        created_time = [x.get('created_at', None) for x in self.tweets_list]
-        return created_time
+        created_at= []
+        for i in self.tweets_list:
+            created_at.append(i['created_at'])
+       
+        return created_at
 
     def find_source(self)->list:
-        source = [x.get('source', '') for x in self.tweets_list]
+        source = []
+        for i in self.tweets_list:
+            source.append(i['source'])
 
         return source
 
     def find_screen_name(self)->list:
-        users = [x.get('user', {}) for x in self.tweets_list]
-        screen_name = [x.get('screen_name') for x in users]
-        return screen_name
+        screen_name = []
+        for i in self.tweets_list:
+            screen_name.append(i['user']['screen_name'])
+        return screen_name    
 
     def find_followers_count(self)->list:
-        followers_count = [x.get('user', {}).get('followers_count', 0) for x in self.tweets_list]
+        followers_count = []
+        for i in self.tweets_list:
+            followers_count.append(i['user']['followers_count'])
         return followers_count
 
     def find_friends_count(self)->list:
-        friends_count = [x.get('user', {}).get('friends_count', 0) for x in self.tweets_list]
-        return friends_count
+        friends_count = []
+        for i in self.tweets_list:
+            friends_count.append(i['user']['friends_count'])
+        return friends_count    
 
-    def is_sensitive(self)->list:
-        is_sensitive = [x.get('possibly_sensitive', None) for x in self.tweets_list]
-
-        return is_sensitive
+    
 
     def find_favourite_count(self)->list:
-        fav_count = [x.get('retweeted_status', {}).get('favorite_count', 0) for x in self.tweets_list]
-        return fav_count
-    
+        favourite_count=[]
+        for i in self.tweets_list:
+            favourite_count.append(i['user']['favourites_count'])
+        return favourite_count    
+            
     def find_retweet_count(self)->list:
-        retweeted_status = [x.get('retweeted_status', {}) for x in self.tweets_list]
-        retweet_count = [x.get('retweet_count', None) for x in retweeted_status]
-
+        retweet_count = []
+        for i in self.tweets_list:
+            retweet_count.append(i['retweet_count'])
         return retweet_count
 
     def find_hashtags(self)->list:
-        # return list of all None
-        hashtags = [x.get('hashtags', None) for x in self.tweets_list]
-        return hashtags
+        hashtags = []
+        for i in self.tweets_list:
+            hashtags.append(i['entities']['hashtags'])
+        return hashtags    
 
     def find_mentions(self)->list:
-        # retun list of all None
-        mentions = [x.get('mentions', None) for x in self.tweets_list]
-        return mentions
-
-
-    def find_location(self)->list:
-        location = [x.get('user', {}).get('location', None) for x in self.tweets_list]
-        return location
+        try:
+           mentions= self.tweets_list['location']
+        except TypeError:
+            mentions = ''
         
-    def find_lang(self)->list:
-        lang = [x.get('retweeted_status', {}).get('lang', None) for x in self.tweets_list]
-        return lang   
+        return mentions
+    
+     
+    def find_location(self)->list:
+        try:
+            location = self.tweets_list['user']['location']
+        except TypeError:
+            location = ''
+        
+        return location
+    
 
     
-        
         
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
@@ -144,6 +170,8 @@ class TweetDfExtractor:
         hashtags = self.find_hashtags()
         mentions = self.find_mentions()
         location = self.find_location()
+        # follower_count, friends_count, sensitivity, hashtags, mentions, location)
+        print(type(follower_count), type(friends_count), type(sensitivity))
         data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
 
@@ -158,10 +186,6 @@ if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("../covid19.json")
+    _, tweet_list = read_json("./data/covid19.json")
     tweet = TweetDfExtractor(tweet_list)
-    tweet_df = tweet.get_tweet_df() 
-
-    # use all defined functions to generate a dataframe with the specified columns above
-
-    
+    tweet_df = tweet.get_tweet_df(True) 
