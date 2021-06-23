@@ -1,59 +1,94 @@
-import pandas as pd # first import pandas
-class Clean_Tweets:
-    """
-    The PEP8 Standard AMAZING!!!
-    """
-    def __init__(self, df:pd.DataFrame):
-        self.df = df
-        print('Automation in Action...!!!')
-        
-    def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:
-        """
-        remove rows that has column names. This error originated from
-        the data collection stage.  
-        """
-        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
-        df.drop(unwanted_rows , inplace=True)
-        df = df[df['polarity'] != 'polarity']
-        
-        return df
-    def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
-        """
-        drop duplicate rows
-        """
-        
-        #fixed line 24
-        
-        return df
-    def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
-        """
-        convert column to datetime
-        """
-        #fixed line 31 (Invali syntax)
-        
-        #fixed line 33 
-        
-        df = df[df['created_at'] >= '2020-12-31' ]
-        
-        return df
-    
-    def convert_to_numbers(self, df:pd.DataFrame)->pd.DataFrame:
-        """
-        convert columns like polarity, subjectivity, retweet_count
-        favorite_count etc to numbers
-        """
-        df['polarity'] = pd.Dataframe # from pd.--- to pd. dataframe
-        
-        #Fixed
-        #fixed
-        
-        return df
-    
-    def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
-        """
-        remove non english tweets from lang
-        """
-        
-        df = pd.DataFrame # Fixed
-        
-        return df
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd # first import pandas\n",
+    "class Clean_Tweets:\n",
+    "    \"\"\"\n",
+    "    The PEP8 Standard AMAZING!!!\n",
+    "    \"\"\"\n",
+    "    def __init__(self, df:pd.DataFrame):\n",
+    "        self.df = df\n",
+    "        print('Automation in Action...!!!')\n",
+    "        \n",
+    "    def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:\n",
+    "        \"\"\"\n",
+    "        remove rows that has column names. This error originated from\n",
+    "        the data collection stage.  \n",
+    "        \"\"\"\n",
+    "        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index\n",
+    "        df.drop(unwanted_rows , inplace=True)\n",
+    "        df = df[df['polarity'] != 'polarity']\n",
+    "        \n",
+    "        return df\n",
+    "    def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:\n",
+    "        \"\"\"\n",
+    "        drop duplicate rows\n",
+    "        \"\"\"\n",
+    "        df.drop_duplicates() #added the drop.duplicate\n",
+    "        #fixed line 24\n",
+    "        \n",
+    "        return df\n",
+    "    def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:\n",
+    "        \"\"\"\n",
+    "        convert column to datetime\n",
+    "        \"\"\"\n",
+    "        #fixed line 31 (Invali syntax)\n",
+    "        \n",
+    "        #fixed line 33 \n",
+    "        df['created_at']= pd.to_datetime(df['created_at'])\n",
+    "        df = df[df['created_at'] >= '2020-12-31' ]\n",
+    "       \n",
+    "        return df\n",
+    "    \n",
+    "    def convert_to_numbers(self, df:pd.DataFrame)->pd.DataFrame:\n",
+    "        \"\"\"\n",
+    "        convert columns like polarity, subjectivity, retweet_count\n",
+    "        favorite_count etc to numbers\n",
+    "        \"\"\"\n",
+    "        df['polarity'] = pd.to_numeric(df['polarity'])\n",
+    "        df['subjectivity'] = pd.to_numeric(df['subjectivity'])\n",
+    "        df['retweet_count'] = pd.to_numeric(df['retweet_count'])\n",
+    "        df['favorite_count'] = pd.to_numeric(df['favorite_count'])\n",
+    "        \n",
+    "        #Fixed\n",
+    "        #fixed\n",
+    "        \n",
+    "        return df\n",
+    "    \n",
+    "    def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:\n",
+    "        \"\"\"\n",
+    "        remove non english tweets from lang\n",
+    "        \"\"\"\n",
+    "        df = df.drop(df[df['lang']!=\"en\"].index)\n",
+    "        \n",
+    "        return df\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
