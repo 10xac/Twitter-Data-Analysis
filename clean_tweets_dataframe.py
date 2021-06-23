@@ -1,11 +1,33 @@
+import pandas as pd
+import re
+
+
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
     """
 
-    def __init__(self, df: pd.DataFrame):
-        self.df = df
+    def __init__(self):
         print('Automation in Action...!!!')
+
+    def add_clean_text(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        convert original_text values to clean_text values
+        """
+
+        df['clean_text'] = df['original_text'].apply(clean_text)
+
+        return df
+
+    def drop_nullValue_rows(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        convert original_text values to clean_text values
+        """
+
+        df.dropna(inplace=True)
+        df.reset_index(drop=True, inplace=True)
+
+        return df
 
     def drop_unwanted_column(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -19,6 +41,7 @@ class Clean_Tweets:
             unwanted_rows += df[df[columnName] == columnName].index
 
         df.drop(unwanted_rows, inplace=True)
+        df.reset_index(drop=True, inplace=True)
 
         return df
 
@@ -27,6 +50,7 @@ class Clean_Tweets:
         drop duplicate rows
         """
         df.drop_duplicates(inplace=True)
+        df.reset_index(drop=True, inplace=True)
 
         return df
 
@@ -56,5 +80,14 @@ class Clean_Tweets:
         index_names = df[df['lang'] != "en"].index
 
         df.drop(index_names, inplace=True)
+        df.reset_index(drop=True, inplace=True)
 
         return df
+
+
+def clean_text(original_text: str) -> str:
+    cleaned_text = re.sub('\n', '', original_text)
+    cleaned_text = re.findall(r'[a-zA-Z]+', cleaned_text)
+    cleaned_text = " ".join(cleaned_text)
+
+    return cleaned_text
