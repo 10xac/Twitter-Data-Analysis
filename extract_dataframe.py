@@ -47,7 +47,7 @@ class TweetDfExtractor:
         text=[]
         for i in self.tweets_list:
             text.append(i['text'])
-            
+        assert_equal.__self__.maxDiff = None    
         return text 
 #         pass
     def find_sentiments(self, text)->list:
