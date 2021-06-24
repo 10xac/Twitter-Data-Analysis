@@ -13,7 +13,7 @@ class Clean_Tweets:
         """
         unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
         df.drop(unwanted_rows , inplace=True)
-        df = df[df['polarity'] != 'polarity']
+        #no column polarity  df = df[df['polarity'] != 'polarity']
         
         return df
     def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
@@ -21,16 +21,14 @@ class Clean_Tweets:
         drop duplicate rows
         """
         
-        ---
+        df = df.drop_duplicates(subset=None,keep=False,inplace=True)
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        ----
-        
-        ----
+        df['created_at'] = pd.to_datetime(df['created_at'])
         
         df = df[df['created_at'] >= '2020-12-31' ]
         
@@ -41,10 +39,10 @@ class Clean_Tweets:
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
-        df['polarity'] = pd.----
-        
-        ----
-        ----
+        #df['polarity'] = pd.to_numeric(df['polarity'])
+        df['subjectivity'] = pd.to_numeric(df['subjectivity'])
+        df['retweet_count'] = pd.to_numeric(df['retweet_count'])
+        df['favourite_count'] = pd.to_numeric(df['favourite_count'])
         
         return df
     
@@ -52,7 +50,6 @@ class Clean_Tweets:
         """
         remove non english tweets from lang
         """
-        
-        df = ----
+        df = df['lang'].map(lambda x:x.isascii())
         
         return df

@@ -1,6 +1,7 @@
 import unittest
 import pandas as pd
 import sys, os
+
 sys.path.append(os.path.abspath(os.path.join('..')))
 
 from extract_dataframe import read_json
@@ -82,6 +83,7 @@ class TestTweetDfExtractor(unittest.TestCase):
     def test_find_location(self):
         self.assertEqual(self.df.find_location(), ['Mass', 'Edinburgh, Scotland', None, None, 'United Kingdom'])
 
+	
 if __name__ == '__main__':
 	unittest.main()
 
