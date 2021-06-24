@@ -1,3 +1,4 @@
+import pandas as pd
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
@@ -21,17 +22,14 @@ class Clean_Tweets:
         drop duplicate rows
         """
         
-        ---
+        df=drop_duplicate()
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        ----
-        
-        ----
-        
+        pd.to_datetime(df)        
         df = df[df['created_at'] >= '2020-12-31' ]
         
         return df
@@ -41,11 +39,11 @@ class Clean_Tweets:
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
-        df['polarity'] = pd.----
+        df['polarity'] = pd.to_numeric(df['mix_col'], errors='coerce')
         
-        ----
-        ----
-        
+        df['subjectivity'] = pd.to_numeric(df['mix_col'], errors='coerce')
+        df['reteweet_count'] = pd.to_numeric(df['mix_col'], errors='coerce')
+        df['favorite_count'] = pd.to_numeric(df['mix_col'], errors='coerce')
         return df
     
     def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
@@ -53,6 +51,8 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
         
-        df = ----
+        df = new_string=re.sub('[^a-zA-Z0-9]',' ',string)
+
+        df=re.sub('\s+',' ',new_string)
         
         return df
