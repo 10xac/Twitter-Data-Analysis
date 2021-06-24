@@ -2,11 +2,10 @@
 language: python
 
 python:
-  - '3.9'
-  - '3.8'
-  - '3.7'
-  - '3.6'
-
+  - "3.9"
+  - "3.8"
+  - "3.7"
+  - "3.6"
 
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
@@ -19,3 +18,7 @@ cache:
 # Command to run tests, e.g. python setup.py test
 script:
   - python -m unittest tests.test_extract_dataframe
+  - python data_analysis.py
+  - python modelling.py
+  - python evaluate_and_deploy.py
+  - python use_models.py
