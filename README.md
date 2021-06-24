@@ -1,23 +1,13 @@
-# Twitter-Data-Analysis
+### This folder is structred in such a way that I have cloned the original file from https://github.com/10xac/Twitter-Data-Analysis link.
+After that I have implemented extract_dataframe and clean_tweet_dataframe. 
+The clean_tweets_dataframe implements a class called Clean_Tweets and it implements drop unwanted column, duplicates and also convert to date time and number and also remove none_english tweets.
 
-### So here are the bare minimum requirement for completing this task
+The TweeteDfExtractor implements a different function to get status count, get full text, get sentiment, get created time, find a source, find screen name, find followers count, find freinds count, find hash tags, find mentions, find location find lang and get tweet df.
 
-1. Fork repository to your github account
-2. Create a branch called “fix_bug” to fix the bugs in the fix_clean_tweets_dataframe.py and fix_extract_dataframe.py 
-3. In branch `fix_bug` copy or rename `fix_clean_tweets_dataframe.py` to `clean_tweets_dataframe.py` and `fix_extract_dataframe.py`  to `extract_dataframe.py` 
-4. Fix the bugs on `clean_tweets_dataframe.py` and `extract_dataframe.py` 
-5. Multiple times push the code you are working on to git, and once the fix is complete, merge the `fix_bug` branch to master
-6. Create a new branch called `make_unittest` for creating a new unit test for extract_dataframe.py code.
-7. After completing the unit test writing, merge  “make_unittest”  to main branch
-8. In all cases when you merge, make sure you first do Pull Request, review, then accept the merge.
-9. Setup Travis CI to your repository such that when you git push new code (or merge a branch) to the main branch, the unit test in tests/*.py runs automatically. 10. All tests should pass.
+ Up on completion of the above task I have been assigned to the second task on Task_2. found on Challenge_Day2.ipynb
+ This uses cleaned_fintech_data.csv which was provided befor in the drive from the course.
 
-After Completing this Challenge, you would have explore  
+ The notebook folder have Dataexploration and preprocessing.ipynb which implements extended from the extract_dataframe and clean_tweet_dataframe to perform reading, preprocessing and data exploration and visualization. And then another jyupiter file should be added to do topic modeling and sentiment analysis. 
 
-- Unittesting
-- Modular Coding
-- Software Engineering Best Practices
-- Python Package Structure
-- Bug Fix (Debugging)
 
-Have Fun and Cheers
+
