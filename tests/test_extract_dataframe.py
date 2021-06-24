@@ -75,12 +75,13 @@ class TestTweetDfExtractor(unittest.TestCase):
     def test_find_retweet_count(self):
         self.assertEqual(self.df.find_retweet_count(), [612, 92, 1, 899, 20])
 
-    # def test_find_hashtags(self):
-    #     self.assertEqual(self.df.find_hashtags(), )
+    def test_find_hashtags(self):
+        self.assertEqual(self.df.find_hashtags(), [[],[],[{'text': 'red4research', 'indices': [87, 100]}],[{'text': 'Covid19', 'indices': [145, 153]}],[]])
 
-    # def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), )
+    
 
+    def test_find_mentions(self):
+        self.assertEqual(self.df.find_mentions(),[[{'screen_name': 'WHOAFRO', 'name': 'WHO African Region', 'id': 544389588, 'id_str': '544389588', 'indices': [81, 89]}, {'screen_name': 'jriggers', 'name': 'Jennifer Rigby', 'id': 174663886, 'id_str': '174663886', 'indices': [209, 218]}], [],[{'screen_name': 'Research2note', 'name': 'Research2note', 'id': 734054113940508672, 'id_str': '734054113940508672', 'indices': [10, 24]}, {'screen_name': 'NHSRDForum', 'name': 'NHS R&D Forum', 'id': 1381499726, 'id_str': '1381499726', 'indices': [108, 119]}], [], [{'screen_name': 'TexasChildrens', 'name': "Texas Children's", 'id': 15393700, 'id_str': '15393700', 'indices': [184, 199]}, {'screen_name': 'biological_e', 'name': 'Biological E. Limited', 'id': 1262299754840551425, 'id_str': '1262299754840551425', 'indices': [241, 254]}]] )
     def test_find_location(self):
         self.assertEqual(self.df.find_location(), ['Mass', 'Edinburgh, Scotland', None, None, 'United Kingdom'])
 
