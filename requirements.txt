@@ -1,3 +1,15 @@
 pandas>=1.1.0
 pip==19.2.3
 textblob==0.15.3
+matplotlib==3.4.2
+seaborn==0.11.1
+wordcloud==1.8.1
+nltk==3.6.2
+pyLDAvis==3.3.1
+spacy==3.0.6
+gensim==4.0.1
+numpy==1.21.0
+sklearn==0.0
+scipy==1.6.1
+joblib==1.0.1
+IPython==7.21.0

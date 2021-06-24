@@ -89,5 +89,6 @@ def clean_text(original_text: str) -> str:
     cleaned_text = re.sub('\n', '', original_text)
     cleaned_text = re.findall(r'[a-zA-Z]+', cleaned_text)
     cleaned_text = " ".join(cleaned_text)
+    cleaned_text = re.sub(r'http.*', "", cleaned_text)
 
     return cleaned_text
