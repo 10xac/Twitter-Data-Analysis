@@ -14,37 +14,45 @@ def read_stored_model_description():
 
 
 def compare_sentiment_models(prev_desc, new_desc):
-    globalVar = globals()
+    global change_sentiment
     if(new_desc['sentiment_analysis']['score'] > prev_desc['sentiment_analysis']['score']):
-        globalVar['change_sentiment'] == 1
-        return new_desc['sentiment_analysis']['name'], new_desc['sentiment_analysis']['score']
+        change_sentiment == 1
+        return (new_desc['sentiment_analysis']['name'], new_desc['sentiment_analysis']['score'])
+
+    else:
+        return (prev_desc['sentiment_analysis']['name'], prev_desc['sentiment_analysis']['score'])
 
 
 def compare_topic_models(prev_desc, new_desc):
-    globalVar = globals()
+    global change_topic
     if(new_desc['topic_modeling']['coherence_score'] > prev_desc['topic_modeling']['coherence_score']):
         if(new_desc['topic_modeling']['perplexity_score'] < prev_desc['topic_modeling']['perplexity_score']):
-            globalVar['change_topic'] == 1
-            return new_desc['topic_modeling']['perplexity_score'], new_desc['sentiment_analysis']['coherence_score']
+            change_topic == 1
+            return (new_desc['topic_modeling']['perplexity_score'], new_desc['topic_modeling']['coherence_score'])
+
+    else:
+        return (prev_desc['topic_modeling']['perplexity_score'], prev_desc['topic_modeling']['coherence_score'])
 
 
 def deploy_better_models():
     prev_desc, new_desc = read_stored_model_description()
     validated_description = prev_desc.copy()
 
-    validated_description['sentiment_analysis']['name'], validated_description[
-        'sentiment_analysis']['score'] = compare_sentiment_models(prev_desc, new_desc)
+    validated_description['sentiment_analysis']['name'],
+    validated_description['sentiment_analysis']['score'] = compare_sentiment_models(
+        prev_desc, new_desc)
     validated_description['topic_modeling']['perplexity_score'], validated_description[
         'sentiment_analysis']['coherence_score'] = compare_topic_models(prev_desc, new_desc)
 
-    globalVar = globals()
-    if(globalVar['change_sentiment'] == 1):
+    global change_sentiment
+    global change_topic
+    if(change_sentiment == 1):
         sentiment_model = joblib.load(
             './trained_models/newsentimentSGDmodel.jl')
         os.remove('./trained_models/sentimentSGDmodel.jl')
         joblib.dump(sentiment_model, './trained_models/sentimentSGDmodel.jl')
 
-    if(globalVar['change_topic'] == 1):
+    if(change_topic == 1):
         topic_model = joblib.load('./trained_models/newtopicLDAmodel.jl')
         os.remove('./trained_models/topicLDAmodel.jl')
         joblib.dump(topic_model, './trained_models/topicLDAmodel.jl')
