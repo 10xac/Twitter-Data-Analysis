@@ -7,7 +7,7 @@ from clean_tweets_dataframe import Clean_Tweets
 
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
-_, tweet_list = read_json("../data/covid19.json")
+_, tweet_list = read_json("./data/covid19.json")
 
 class TestCleanTweetsDataframe(unittest.TestCase):
   def setUp(self) -> None:
