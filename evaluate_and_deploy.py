@@ -35,34 +35,38 @@ def compare_topic_models(prev_desc, new_desc):
 
 
 def deploy_better_models():
-    prev_desc, new_desc = read_stored_model_description()
-    validated_description = prev_desc.copy()
+    try:
+        prev_desc, new_desc = read_stored_model_description()
+        validated_description = prev_desc.copy()
 
-    validated_description['sentiment_analysis']['name'],
-    validated_description['sentiment_analysis']['score'] = compare_sentiment_models(
-        prev_desc, new_desc)
-    validated_description['topic_modeling']['perplexity_score'], validated_description[
-        'sentiment_analysis']['coherence_score'] = compare_topic_models(prev_desc, new_desc)
+        validated_description['sentiment_analysis']['name'],
+        validated_description['sentiment_analysis']['score'] = compare_sentiment_models(
+            prev_desc, new_desc)
+        validated_description['topic_modeling']['perplexity_score'], validated_description[
+            'sentiment_analysis']['coherence_score'] = compare_topic_models(prev_desc, new_desc)
 
-    global change_sentiment
-    global change_topic
-    if(change_sentiment == 1):
-        sentiment_model = joblib.load(
-            './trained_models/newsentimentSGDmodel.jl')
-        os.remove('./trained_models/sentimentSGDmodel.jl')
-        joblib.dump(sentiment_model, './trained_models/sentimentSGDmodel.jl')
+        global change_sentiment
+        global change_topic
+        if(change_sentiment == 1):
+            sentiment_model = joblib.load(
+                './trained_models/newsentimentSGDmodel.jl')
+            os.remove('./trained_models/sentimentSGDmodel.jl')
+            joblib.dump(sentiment_model, './trained_models/sentimentSGDmodel.jl')
 
-    if(change_topic == 1):
-        topic_model = joblib.load('./trained_models/newtopicLDAmodel.jl')
-        os.remove('./trained_models/topicLDAmodel.jl')
-        joblib.dump(topic_model, './trained_models/topicLDAmodel.jl')
+        if(change_topic == 1):
+            topic_model = joblib.load('./trained_models/newtopicLDAmodel.jl')
+            os.remove('./trained_models/topicLDAmodel.jl')
+            joblib.dump(topic_model, './trained_models/topicLDAmodel.jl')
 
-    os.remove('./trained_models/trainedModelsData.jl')
-    os.remove('./trained_models/newtrainedModelsData.jl')
-    os.remove('./trained_models/newsentimentSGDmodel.jl')
-    os.remove('./trained_models/newtopicLDAmodel.jl')
+        os.remove('./trained_models/trainedModelsData.jl')
+        os.remove('./trained_models/newtrainedModelsData.jl')
+        os.remove('./trained_models/newsentimentSGDmodel.jl')
+        os.remove('./trained_models/newtopicLDAmodel.jl')
 
-    joblib.dump(validated_description, './trained_models/trainedModelsData.jl')
+        joblib.dump(validated_description, './trained_models/trainedModelsData.jl')
+
+    except FileNotFoundError:
+        pass
 
 
 if __name__ == '__main__':
