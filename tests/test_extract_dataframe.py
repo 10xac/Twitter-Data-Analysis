@@ -29,7 +29,7 @@ class TestTweetDfExtractor(unittest.TestCase):
     def test_find_statuses_count(self):
         self.assertEqual(self.df.find_statuses_count(), [204051, 3462, 6727, 45477, 277957])
 
-#     def test_find_full_text(self):
+#     def  test_find_full_text(self):
 #         text = ['RT @TelGlobalHealth: "Africa is in the midst of a full-blown third wave," @MoetiTshidi said. "The sobering trajectory of surging cases shou…',
 #  'RT @Senators: Expect to see some different kind of shots at @CdnTireCtr next week!\n\xa0\nDo your part and get your #Covid19 vaccine.\n\nDETAILS:…',
 #  'RT @stkirsch: **BIG NEWS**: Up to 25,800 may have been killed by the COVID vaccine.  I bet that this is a lower bound on the number killed…',
