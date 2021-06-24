@@ -188,4 +188,5 @@ if __name__ == "__main__":
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
     _, tweet_list = read_json("../Twitter-Data-Analysis/data/covid19.json")
     tweet = TweetDfExtractor(tweet_list)
+
     tweet_df = tweet.get_tweet_df(True) 
