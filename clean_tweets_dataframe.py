@@ -1,4 +1,9 @@
 import pandas as pd
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> make_unittest
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
@@ -23,7 +28,11 @@ class Clean_Tweets:
         """
         drop duplicate rows
         """
+<<<<<<< HEAD
         df = df.drop_duplicates()
+=======
+        df.drop_duplicates(inplace=True)
+>>>>>>> make_unittest
 
         return df
 
@@ -31,7 +40,14 @@ class Clean_Tweets:
         """
         convert column to datetime
         """
+<<<<<<< HEAD
         df = pd.to_datetime(df['created_at'], errors='coerce')
+=======
+
+        df['created_at'] = pd.to_datetime(
+            df['created_at'])
+
+>>>>>>> make_unittest
         return df
 
     def convert_to_numbers(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -39,8 +55,16 @@ class Clean_Tweets:
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
+<<<<<<< HEAD
         df['polarity', 'subjectivity', 'retweet_count', 'favorite_count'] = pd.to_numeric(df['polarity', 'subjectivity',
                                                                                              'retweet_count', 'favorite_count'])
+=======
+        df['polarity'] = pd.to_numeric(df["polarity"])
+        df["subjectivity"] = pd.to_numeric(df["subjectivity"])
+        df["retweet_count"] = pd.to_numeric(df["retweet_count"])
+        df["favorite_count"] = pd.to_numeric(df["favorite_count"])
+        df["friends_count "] = pd.to_numeric(df["polarity"])
+>>>>>>> make_unittest
 
         return df
 
@@ -48,4 +72,11 @@ class Clean_Tweets:
         """
         remove non english tweets from lang
         """
+<<<<<<< HEAD
         df = df[df["lang"] == "en"]
+=======
+
+        df = df.drop(df[df['lang'] != 'en'].index)
+
+        return df
+>>>>>>> make_unittest
