@@ -21,7 +21,7 @@ script:
   - python -m unittest tests.test_extract_dataframe
 
  
-notification:
+notifications:
    email:
    receipeints:
       -neba.samuel17@gmail.com
