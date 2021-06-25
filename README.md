@@ -19,6 +19,6 @@ After Completing this Challenge, you would have explore
 - Modular Coding
 - Software Engineering Best Practices
 - Python Package Structure
-- Bug Fix (Debugging)
+- Bug Fix (Debugging),
 
 Have Fun and Cheers
