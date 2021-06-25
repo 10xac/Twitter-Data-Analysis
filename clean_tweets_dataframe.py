@@ -2,6 +2,7 @@ class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
     """
+    import pandas as pd 
     def __init__(self, df:pd.DataFrame):
         self.df = df
         print('Automation in Action...!!!')
@@ -30,7 +31,7 @@ class Clean_Tweets:
         """
         ----
         
-        df['created_at'] = pd.to_datetime(df['created_at'])
+        df['created_at'] = pd.to_datetime(df['created_at'],format = '%Y%m%d')
         
         df = df[df['created_at'] >= '2020-12-31' ]
         
@@ -41,10 +42,12 @@ class Clean_Tweets:
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
+        df['polarity'] = pd.to_numeric(df['polarity'])
         df['subjectivity'] = pd.to_numeric(df['subjectivity'])
         df['retweet_count'] = pd.to_numeric(df['retweet_count'])
         df['favourite_count'] = pd.to_numeric(df['favourite_count'])
-        
+        df['followers_count'] = pd.to_numeric(df['followers_count'])
+        df['friends_count'] = pd.to_numeric(df['friends_count'])
         
         return df
     
@@ -52,7 +55,10 @@ class Clean_Tweets:
         """
         remove non english tweets from lang
         """
+        import ntlk 
+        words=set(ntlk.corpus.words.words())        
+        df = df['lang'].join(r for r in ntlk.wordpunct_tokenize(df['lang']) if r.lower() in words or not r.isalpha())
         
-        df = df['lang'].map(lambda x:x.isascii())
+        
         
         return df
