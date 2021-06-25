@@ -25,5 +25,6 @@ notification:
    email:
    receipeints:
       -neba.samuel17@gmail.com
-      
+      on_success: never
+      on_failure: always
 
