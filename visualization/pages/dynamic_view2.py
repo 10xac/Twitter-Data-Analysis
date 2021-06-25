@@ -46,9 +46,9 @@ def stBarChart():
     dfCount["original_author"] = dfCount["original_author"].astype(str)
     dfCount = dfCount.sort_values("Tweet_count", ascending=False)
 
-    num = st.slider("Select number of Rankings", 0, 50, 5)
-    title = f"Top {num} Ranking By Number of tweets"
-    barChart(dfCount.head(num), title, "original_author", "Tweet_count")
+    numBC = st.slider("Select number of Rankings", 0, 50, 5)
+    title = f"Top {numBC} Ranking By Number of tweets"
+    barChart(dfCount.head(numBC), title, "original_author", "Tweet_count")
 
 
 def langPie():
@@ -71,9 +71,16 @@ def langPie():
     with colB2:
         st.write(dfLangCount)
 
+def tweetSentiments():
+    df = loadData()
+    st.title(" Tweets Sentiment Chart")
+    st.bar_chart(df.sentiment.value_counts())
+
 def app():
     st.title("Data Visualizations")
     wordCloud()
     with st.beta_expander("Show More Graphs"):
         stBarChart()
         langPie()
+        tweetSentiments()
+        
