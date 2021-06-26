@@ -98,8 +98,16 @@ class TweetDfExtractor:
         return retweet_count
 
     def find_hashtags(self)->list:
-        # return list of all None
-        hashtags = [x.get('hashtags', None) for x in self.tweets_list]
+        # self.twwts_list[0].entities.hashtags
+        entities = [x.get('entities', {}) for x in self.tweets_list]
+        un_filtered_hashtags = [x.get('hashtags', None) for x in entities]
+        
+        hashtags = []
+        for tags in un_filtered_hashtags:
+            if(type(tags) == list and len(tags) > 0):
+                hashtags.append([x.get('text', None) for x in tags])
+            else :
+                hashtags.append(None)
         return hashtags
 
     def find_mentions(self)->list:
@@ -152,8 +160,8 @@ if __name__ == "__main__":
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
     tweets_length, tweet_list = read_json("data/covid19.json")
-    print(tweets_length)
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
+    # print(tweet_df['hashtags'].head(13))
 
     
