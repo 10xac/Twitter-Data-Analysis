@@ -5,7 +5,7 @@
 -- DECLARE @createtable AS VARCHAR(100)='rawdata'
 -- 
 -- Declare  table name to be deleted
--- DECLARE @droptable AS VARCHAR(100)='tobedeletedtable'
+-- DECLARE @droptable AS VARCHAR(100)='rawdata'
 -- 
 -- Insert value 
 -- DECLARE @insertValue AS INT = 11
