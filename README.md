@@ -1,5 +1,8 @@
 # Twitter-Data-Analysis
 
+I follwed the steps below for this project
+Day 4 Unittesting task
+
 ### So here are the bare minimum requirement for completing this task
 
 1. Fork repository to your github account
