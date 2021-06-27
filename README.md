@@ -1,9 +1,8 @@
 # Twitter-Data-Analysis
-## Task 1
-### 10 Accademy intensive challenge week 
-#### Basics of Git hub, fixing bugs, unittest & Travis CI
+## Task 1 - Basics of Git hub, fixing bugs, unittest & Travis CI
+### 10 Accademy intensive challenge week `(Date: 21,June,2021 - 25,June,2021)`
 
-##### What I did
+#### What I did
 `1.` I Forked a repository from https://github.com/10xac/Twitter-Data-Analysis to my github account
 
 `2.` I Created a branch called “fix_bug” then I fixed the bugs in the fix_clean_tweets_dataframe.py and fix_extract_dataframe.py & renamed the files removing 'fix'
