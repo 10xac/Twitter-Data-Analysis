@@ -1,23 +1,16 @@
 # Twitter-Data-Analysis
+## Task 1 - Basics of Git hub, fixing bugs, unittest & Travis CI
+### 10 Accademy intensive challenge week `(Date: 21,June,2021 - 25,June,2021)`
 
-### So here are the bare minimum requirement for completing this task
+#### What I did
+`1.` I Forked a repository from https://github.com/10xac/Twitter-Data-Analysis to my github account
 
-1. Fork repository to your github account
-2. Create a branch called “fix_bug” to fix the bugs in the fix_clean_tweets_dataframe.py and fix_extract_dataframe.py 
-3. In branch `fix_bug` copy or rename `fix_clean_tweets_dataframe.py` to `clean_tweets_dataframe.py` and `fix_extract_dataframe.py`  to `extract_dataframe.py` 
-4. Fix the bugs on `clean_tweets_dataframe.py` and `extract_dataframe.py` 
-5. Multiple times push the code you are working on to git, and once the fix is complete, merge the `fix_bug` branch to master
-6. Create a new branch called `make_unittest` for creating a new unit test for extract_dataframe.py code.
-7. After completing the unit test writing, merge  “make_unittest”  to main branch
-8. In all cases when you merge, make sure you first do Pull Request, review, then accept the merge.
-9. Setup Travis CI to your repository such that when you git push new code (or merge a branch) to the main branch, the unit test in tests/*.py runs automatically. 10. All tests should pass.
+`2.` I Created a branch called “fix_bug” then I fixed the bugs in the fix_clean_tweets_dataframe.py and fix_extract_dataframe.py & renamed the files removing 'fix'
 
-After Completing this Challenge, you would have explore  
+`3.` I pushed the code everytime I changed, and once the fix is done, I merged the `fix_bug` branch to main.
 
-- Unittesting
-- Modular Coding
-- Software Engineering Best Practices
-- Python Package Structure
-- Bug Fix (Debugging)
+`4.` I created a new branch called `make_unittest` for creating a new unit test for extract_dataframe.py code, and while completing the unit test writing, I merged the  “make_unittest”  to main branch
 
-Have Fun and Cheers
+`5.` I logged in to the Travis CI using my Git hub account and set it up to my repository. 
+
+`6.` All the tests have passed successfully.
