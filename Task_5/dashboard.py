@@ -6,6 +6,8 @@ from wordcloud import WordCloud
 import plotly.express as px
 from add_data import db_execute_fetch
 
+
+
 st.set_page_config(page_title="Day 5", layout="wide")
 
 def loadData():

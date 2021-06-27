@@ -5,7 +5,7 @@ from mysql.connector import Error
 
 
 def ConnectDatabase(dbName=None):
-    conn = mysql.connect(host='192.168.1.1', user='root', password='rootroot',
+    conn = mysql.connect(host='localhost', user='root', password='0911867947Bina',
                          database=dbName, buffered=True)
     cur = conn.cursor()
     return conn, cur
@@ -98,6 +98,7 @@ def db_execute_fetch(*args, many=False, tablename='', rdf=True, **kwargs) -> pd.
         return pd.DataFrame(res, columns=field_names)
     else:
         return res
+
 if __name__ == "__main__":
     createdatabase(dbName='tweets')
     Alterdatabse(dbName='tweets')
