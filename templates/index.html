@@ -54,6 +54,7 @@
         margin: 1.5rem;
       }
       .banner {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
       position: relative;
       height: 500px;
       background-image: url("https://lh3.googleusercontent.com/proxy/AGP475kJ9RUpnX3U1RQBKLSsN5bgDBXKG59BkvTc9CoHoWJTr0T3_ivqdc0unwAyHdPyDvWndSlfYXLI_gNfLjLpek_FEt6PS5GKSsXZwA");  
@@ -65,7 +66,7 @@
       }
       .banner::after {
       content: "";
-      background-color: rgba(0, 0, 0, 0.2); 
+      background-color: rgba(72, 163, 12, 0.411); 
       position: absolute;
       width: 100%;
       height: 100%;
@@ -224,10 +225,10 @@ cursor: pointer;
         <br/>
         <div class="btn-inline">
           <form action="/add-data" method="POST" >
-            <button type="submit" href="/">Insert Data To DB</button>
+            <button type="submit">Insert Data To DB</button>
           </form>
-          <form action="">
-            <button type="submit" href="/">View</button>
+          <form action="/tweets" method="GET">
+            <button type="submit" >View Tweets</button>
           </form>
         </div>
         <!-- <div class="btn-block">

@@ -24,15 +24,15 @@ mysql = MySQL(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        userDetails = request.form
-        name = userDetails['name']
-        email = userDetails['email']
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)", (name, email)) 
-        mysql.connection.commit()
-        cur.close()
-        return '<h1>Successfully added to db!</h1>'
+    # if request.method == 'POST':
+        # userDetails = request.form
+        # name = userDetails['name']
+        # email = userDetails['email']
+        # cur = mysql.connection.cursor()
+        # cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)", (name, email)) 
+        # mysql.connection.commit()
+        # cur.close()
+        # return '<h1>Successfully added to db!</h1>'
         # return redirect('/tweets')
     return render_template('index.html')
 
@@ -67,13 +67,20 @@ def indexRoute():
     # return render_template('index.html')
     # insert_to_tweet_table(dbName='tweets', df=df, table_name='TweetInformation')
 
-@app.route('/tweets')
+@app.route('/tweets', methods=['GET', 'POST'])
 def tweets():
-    cur = mysql.connection.cursor()
-    resultValue = cur.execute("SELECT * FROM TweetInformation");
-    if resultValue > 0:
-        tweetDetails = cur.fetchall()
-        return render_template('tweets.html', tweetDetails)
+    if request.method == 'GET':
+        return render_template('tweets.html')
+    elif request.method == 'POST':
+        authorDetail = request.form
+        author = authorDetail['user'] 
+        # dbQuery = f"SELECT * from TweetssLastsss WHERE original_author={author};"
+        dbQuery = f"SELECT * FROM TweetssLastsss HAVING original_author = '{author}'"
+        cur = mysql.connection.cursor()
+        resultValue = cur.execute(dbQuery);
+        if resultValue > 0:
+            tweetDetails = cur.fetchall()
+            return render_template('user.html', tweetDetails=tweetDetails)
 
 
 def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:

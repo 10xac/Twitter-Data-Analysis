@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Tweets</title>
+</head>
+<body>
+    <table border=1>
+        {% for tweet in tweetDetails %}
+        <tr>
+            <td>{{tweet[0]}}</td>
+            <td>{{tweet[1]}}</td>
+            <td>{{tweet[2]}}</td>
+            <td>{{tweet[3]}}</td>
+            <td>{{tweet[4]}}</td>
+            <td>{{tweet[5]}}</td>
+            <td>{{tweet[6]}}</td>
+            <td>{{tweet[7]}}</td>
+            <td>{{tweet[8]}}</td>
+            <td>{{tweet[9]}}</td>
+            <td>{{tweet[10]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
