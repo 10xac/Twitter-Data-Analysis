@@ -17,13 +17,13 @@ class Clean_Tweets:
         df = df[df['polarity'] != 'polarity']
         
         return df
-    def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
+    def drop_duplicates(self, df:pd.DataFrame)->pd.DataFrame:
         """
         drop duplicate rows
         """
         
         df = self.df
-        df.drop_duplicate
+        df.drop_duplicates()
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """

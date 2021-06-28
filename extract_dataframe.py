@@ -161,7 +161,7 @@ if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("C:/Users/DESMOND/Twitter-Data-Analysis/data/covid19.json")
+    _, tweet_list = read_json("/home/amon/Desktop/Kim/Twitter-Data-Analysis/Twitter-Data-Analysis/data/covid19.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
 
@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
     clean = Clean_Tweets(tweet_df)
     clean_df =clean.drop_unwanted_column(tweet_df)
-    clean_df =clean.drop_duplicate(clean_df)
+    clean_df =clean.drop_duplicates(clean_df)
     clean_df =clean.convert_to_datetime(clean_df)
     print(clean_df.head(5))
     clean_df.to_csv('./data/clean_tweet.csv')
