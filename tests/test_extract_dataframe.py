@@ -65,7 +65,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_friends_count(), friends_count)
 
     def test_find_is_sensitive(self):
-        self.assertEqual(self.df.is_sensitive(), [None, None, None, None, None])
+        self.assertEqual(self.df.is_sensitive(), [False, False, False])
 
     def test_find_favourite_count(self):
         self.assertEqual(self.df.find_favourite_count(), [548, 195, 2, 1580, 72])
@@ -73,11 +73,9 @@ class TestTweetDfExtractor(unittest.TestCase):
     def test_find_retweet_count(self):
         self.assertEqual(self.df.find_retweet_count(), [612, 92, 1, 899, 20])
 
-    # def test_find_hashtags(self):
-    #     self.assertEqual(self.df.find_hashtags(), )
+    def test_find_hashtags(self):
+        self.assertEqual(self.df.find_hashtags(), [[], [], ['#red4research'], ['#Covid19'],[]])
 
-    # def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), )
 
     def test_find_location(self):
         self.assertEqual(self.df.find_location(), ['Mass', 'Edinburgh, Scotland', None, None, 'United Kingdom'])
