@@ -97,6 +97,141 @@ def tweets():
         return render_template('tweets.html', tweetDetails)
 
 
+def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
+    """
+
+    Parameters
+    ----------
+    df :
+        pd.DataFrame:
+    df :
+        pd.DataFrame:
+    df:pd.DataFrame :
+
+
+    Returns
+    -------
+
+    """
+    # cols_2_drop = ['Unnamed: 0', 'timestamp', 'sentiment', 'possibly_sensitive', 'original_text']
+    try:
+        # df = df.drop(columns=cols_2_drop, axis=1)
+        df = df.fillna(0)
+    except KeyError as e:
+        print("Error other here:", e)
+
+    return df
+
+
+@app.route('/insert', methods=['GET', 'POST'])
+def insert_to_tweet_table(dbName: str, df: pd.DataFrame, table_name: str) -> None:
+    """
+
+    Parameters
+    ----------
+    dbName :
+        str:
+    df :
+        pd.DataFrame:
+    table_name :
+        str:
+    dbName :
+        str:
+    df :
+        pd.DataFrame:
+    table_name :
+        str:
+    dbName:str :
+
+    df:pd.DataFrame :
+
+    table_name:str :
+
+
+    Returns
+    -------
+
+    """
+    # DBConnect()
+    # print(mysql.connection)
+
+    # cur = mysql.connection.cursor()
+    # conn = mysql.connection.commit()
+    db = yaml.load(open('db.yaml'))
+    app.config['MYSQL_HOST'] = db['mysql_host']
+    app.config['MYSQL_USER'] = db['mysql_user']
+    app.config['MYSQL_PASSWORD'] = db['mysql_password']
+    app.config['MYSQL_DB'] = db['mysql_db']
+
+    mysql = MySQL(app)
+    cur = mysql.connection.cursor()
+
+    df = preprocess_df(df)
+
+    for _, row in df.iterrows():
+        sqlQuery = f"""INSERT INTO {table_name} (created_at, source, polarity, subjectivity, original_text, lang, favorite_count, retweet_count, original_author, followers_count, friends_count, possibly_sensitive, hashtags,  user_mentions, location)
+             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+        data = (row[0], row[1], row[2], row[3], (row[4]), (row[5]), row[6], row[7], row[8], row[9], row[10], row[11],
+                row[12], row[13], row[14])
+
+        try:
+            # Execute the SQL command
+            cur.execute(sqlQuery, data)
+            # Commit your changes in the database
+            mysql.connection.commit()
+            cur.close()
+            print("Data Inserted Successfully")
+            return '<h1>Data Inserted Successfully!</h1>'
+        except Exception as e:
+            # mysql.connection.rollback()
+            print("Error Here: ", e)
+    return
+
+def db_execute_fetch(*args, many=False, tablename='', rdf=True, **kwargs) -> pd.DataFrame:
+    """
+
+    Parameters
+    ----------
+    *args :
+
+    many :
+         (Default value = False)
+    tablename :
+         (Default value = '')
+    rdf :
+         (Default value = True)
+    **kwargs :
+
+
+    Returns
+    -------
+
+    """
+    connection, cursor1 = DBConnect(**kwargs)
+    if many:
+        cursor1.executemany(*args)
+    else:
+        cursor1.execute(*args)
+
+    # get column names
+    field_names = [i[0] for i in cursor1.description]
+
+    # get column values
+    res = cursor1.fetchall()
+
+    # get row count and show info
+    nrow = cursor1.rowcount
+    if tablename:
+        print(f"{nrow} recrods fetched from {tablename} table")
+
+    cursor1.close()
+    connection.close()
+
+    # return result
+    if rdf:
+        return pd.DataFrame(res, columns=field_names)
+    else:
+        return res
 
 if __name__ == '__main__':
     # db = yaml.load(open('db.yaml'))
