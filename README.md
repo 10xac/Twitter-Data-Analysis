@@ -12,6 +12,8 @@ The TweeteDfExtractor implements a different function to get status count, get f
 
 
 This to to include a unit testing
+Initial result of the test files added -- "case1.py" and "test_from_drive/test_case1.py"
 
 
 
+The task_5 folder includes basically 4 files, one schema for a database created called "createDropTables.sql" which creates, deletes tables and also insert and update a value from a database called task_5. The "The day5_schema.sql" was provided. an update to the addData and dashboard.py. they will help read data from table and display it on streamlit. The webapp have two pages.  
