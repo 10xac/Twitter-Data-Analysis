@@ -3,8 +3,8 @@ import pandas as pd
 import sys, os
 sys.path.append(os.path.abspath(os.path.join('..')))
 
-from extract_dataframe import read_json
-from extract_dataframe import TweetDfExtractor
+from fix_extract_dataframe import read_json
+from fix_extract_dataframe import TweetDfExtractor
 
 _, tweet_list = read_json("data/covid19.json")
 
