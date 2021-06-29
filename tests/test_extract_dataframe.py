@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join('..')))
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
 
-_, tweet_list = read_json("data/covid19.json")
+_, tweet_list = read_json("../data/covid19.json")
 
 columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
@@ -73,11 +73,11 @@ class TestTweetDfExtractor(unittest.TestCase):
     def test_find_retweet_count(self):
         self.assertEqual(self.df.find_retweet_count(), [612, 92, 1, 899, 20])
 
-    # def test_find_hashtags(self):
-    #     self.assertEqual(self.df.find_hashtags(), )
+    def test_find_hashtags(self):
+         self.assertEqual(self.df.find_hashtags(),[[],[],['red4research'],[],[]] )
 
-    # def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), )
+    def test_find_mentions(self):
+         self.assertEqual(self.df.find_mentions(), [['TelGlobalHealth', 'WHOAFRO'], ['globalhlthtwit'], ['NHSRDForum', 'Research2note', 'NHSRDForum'],['HighWireTalk'],['PeterHotez']])
 
     def test_find_location(self):
         self.assertEqual(self.df.find_location(), ['Mass', 'Edinburgh, Scotland', None, None, 'United Kingdom'])
