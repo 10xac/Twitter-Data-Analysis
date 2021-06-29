@@ -4,6 +4,7 @@ import streamlit as st
 import altair as alt
 from wordcloud import WordCloud
 import plotly.express as px
+# from nltk.corpus import stopwords
 from data import db_execute_fetch
 
 st.set_page_config(page_title="Day 5", layout="wide")
