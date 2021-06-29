@@ -124,8 +124,6 @@ def run():
 
     sgd = joblib.dump(best_model, './trained_models/newsentimentSGDmodel.jl')
 
-    nltk.download('stopwords')
-
     stop_words = stopwords.words('english')
     stop_words.extend(['from', 'subject', 're', 'edu', 'use'])
 

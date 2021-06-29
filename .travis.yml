@@ -8,6 +8,7 @@ python:
 install:
   - pip install -r requirements.txt
   - python -m spacy download en_core_web_sm
+  - python -m nltk.downloader stopwords
   - pip install python-Levenshtein
 
 # cache installation
@@ -18,7 +19,6 @@ cache:
 script:
   - python -m unittest tests.test_extract_dataframe
   - python data_analysis.py
-  #Need Fixing
-  # - python modelling.py
+  - python modelling.py
   - python evaluate_and_deploy.py
   - python use_models.py
