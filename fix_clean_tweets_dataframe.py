@@ -29,7 +29,7 @@ class Clean_Tweets:
 
     def convert_to_datetime(self, df: pd.DataFrame) -> pd.DataFrame:
         """
-        convert column to datetime
+        Convert column to datetime
         """
         df = pd.to_datetime(df['created_at'], errors='coerce')
         return df
