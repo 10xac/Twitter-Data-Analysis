@@ -2,12 +2,17 @@ import mysql.connector
 import os
 import pandas as pd
 from mysql.connector import Error
+import yaml
+    
+db = yaml.load(open('db.yaml'))
+host = db['mysql_host']
+user = db['mysql_user']
+password = db['mysql_password']
+database = db['mysql_db']
 
 def DBConnect(dbName=None):
-    print('BEING CALLED')
-    conn=mysql.connector.connect(host='localhost',port="3306", user='root', password="neba",
+    conn=mysql.connector.connect(host=host ,port="3306", user=user, password=password,
                          database=dbName)
-    print('Alright here')
     cur = conn.cursor()
     return conn, cur
 def emojiDB(dbName: str) -> None:
@@ -177,8 +182,8 @@ def db_execute_fetch(*args, many=False, tablename='', rdf=True, **kwargs) -> pd.
 
 
 if __name__ == "__main__":
-    createDB(dbName='tweets')
-    emojiDB(dbName='tweets')
-    createTables(dbName='tweets')
+    createDB(dbName=database)
+    emojiDB(dbName=database)
+    createTables(dbName=database)
     df = pd.read_csv('./clean_processed_tweet_data.csv')
-    insert_to_tweet_table(dbName='tweets', df=df, table_name='TweetInformation')
+    insert_to_tweet_table(dbName=database, df=df, table_name='TweetInformation')
