@@ -4,10 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="static/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="static/css/main.css">
     <title>User Tweets</title>
 </head>
 <body>
-    <table border=1>
+    <!-- <table border=1>
         {% for tweet in tweetDetails %}
         <tr>
             <td>{{tweet[0]}}</td>
@@ -23,6 +39,126 @@
             <td>{{tweet[10]}}</td>
         </tr>
         {% endfor %}
-    </table>
+    </table> -->
+
+
+    <div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver1 m-b-110">
+					<div class="table100-head">
+						<table>
+							<thead>
+								<tr class="row100 head">
+									<!-- <th class="cell100 column1">ID</th> -->
+									<!-- <th class="cell100 column1">created_at</th> -->
+									<!-- <th class="cell100 column3">source</th> -->
+									<!-- <th class="cell100 column4">polarity</th> -->
+									<!-- <th class="cell100 column5">subjectivity</th> -->
+								   <!-- <th class="cell100 column2">language</th> -->
+									<!-- <th class="cell100 column3">favorite_count</th> -->
+									<!-- <th class="cell100 column4">retweet_count</th> -->
+
+
+                                        
+									<!-- <th class="cell100 column1">created_at</th>
+									<th class="cell100 column5">original_author</th>
+									<th class="cell100 column6">followers_count</th>
+									<th class="cell100 column7">friends_count</th>
+									<th class="cell100 column8">hashtags</th>
+									<th class="cell100 column10">location</th>
+                                    ======================================================= -->
+									<!-- <th class="cell100 column9">user_mentions</th>  -->
+									<!-- <th class="cell100 column12">possibly_sensitive</th> -->
+
+
+
+
+                                    <!-- <th class="cell100 column1">Created At</th> -->
+									<th class="cell100 column1">Original Author</th>
+									<th class="cell100 column2">Number of Follwers</th>
+									<th class="cell100 column3">Original Text</th>
+									<th class="cell100 column4">Hashtags</th>
+									<th class="cell100 column5">Location</th>
+
+
+
+									<!-- <th class="cell100 column11">clean_text</th>   -->
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+					<div class="table100-body js-pscroll">
+						<table>	
+							<tbody>
+                                {% for tweet in tweetDetails %}
+                                <tr>
+                                    <!-- <td  class="cell100 column1">{{tweet[0]}}</td> -->
+                                    <!-- <td class="cell100 column1">{{tweet[1]}}</td>  -->
+                                    <!-- <td class="cell100 column2">{{tweet[2]}}</td> -->
+                                    <!-- <td class="cell100 column3">{{tweet[3]}}</td> -->
+                                    <!-- <td class="cell100 column4">{{tweet[4]}}</td>  -->
+
+
+                                    <!-- <td class="cell100 column1">{{tweet[0]}}</td>
+                                    <td class="cell100 column2">{{tweet[6]}}</td>
+                                    <td class="cell100 column3">{{tweet[7]}}</td>
+                                    <td class="cell100 column4">{{tweet[8]}}</td>
+                                    <td class="cell100 column5">{{tweet[9]}}</td>
+                                    <td class="cell100 column6">{{tweet[10]}}</td>
+                                    <td class="cell100 column7">{{tweet[11]}}</td>
+                                    <td class="cell100 column8">{{tweet[13]}}</td>
+                                    <td class="cell100 column9">{{tweet[14]}}</td> -->
+
+
+                                    <!-- <td class="cell100 column15">{{tweet[15]}}</td> -->
+                                    <!-- <td class="cell100 column16">{{tweet[16]}}</td> -->
+                                    <!-- <td>{{tweet[8]}}</td>
+                                    <td>{{tweet[9]}}</td>
+                                    <td>{{tweet[10]}}</td> -->
+                                    <!-- <td class="cell100 column1">{{tweet[1]}}</td> -->
+									<td class="cell100 column2">{{tweet[8]}}</td>
+									<td class="cell100 column3">{{tweet[9]}}</td>
+									<td class="cell100 column4">{{tweet[15]}}</td>
+									<td class="cell100 column5">{{tweet[12]}}</td>
+									<td class="cell100 column6">{{tweet[14]}}</td>
+                                    <!-- <td class="cell100 column4">Aaron Chapman</td>
+									<td class="cell100 column5">10</td>                                     -->
+                                </tr>
+                                {% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+    <!--===============================================================================================-->	
+	<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="static/vendor/bootstrap/js/popper.js"></script>
+        <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="static/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="static/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script>
+            $('.js-pscroll').each(function(){
+                var ps = new PerfectScrollbar(this);
+    
+                $(window).on('resize', function(){
+                    ps.update();
+                })
+            });
+                
+            
+        </script>
+    <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+    
 </body>
 </html>
