@@ -16,7 +16,7 @@ class TestTweetDfExtractor(unittest.TestCase):
     """
 		A class for unit-testing function in the fix_clean_tweets_dataframe.py file
 
-		Args:
+		args:
         -----
 			unittest.TestCase this allows the new class to inherit
 			from the unittest module

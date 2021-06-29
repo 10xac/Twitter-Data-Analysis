@@ -7,7 +7,7 @@ def read_json(json_file: str)->list:
     json file reader to open and read json files into a list
     Args:
     -----
-    json_file: str - path of a json file
+    json_file: str - Path of a json file
     
     and
     

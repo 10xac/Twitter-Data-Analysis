@@ -9,7 +9,7 @@ class Clean_Tweets:
         
     def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:
         """
-        remove rows that has column names. This error originated from
+        Remove rows that has column names. This error originated from
         the data collection stage.  
         """
         unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
