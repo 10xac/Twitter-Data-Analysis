@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.lib.function_base import place
 import pandas as pd
 import streamlit as st
 import altair as alt
@@ -6,7 +7,6 @@ from wordcloud import WordCloud
 import plotly.express as px
 # from nltk.corpus import stopwords
 from data import db_execute_fetch
-import yaml
 
 st.set_page_config(page_title="Tweeter Sentiment Analysis", layout="wide")
 
@@ -16,29 +16,27 @@ def loadData():
     return df
 
 def selectHashTag():
+    st.title('Filter Tweets By HashTag')
     df = loadData()
     hashTags = st.multiselect("choose combaniation of hashtags", list(df['hashtags'].unique()))
     if hashTags:
         df = df[np.isin(df, hashTags).any(axis=1)]
         st.write(df)
+    else: # default filter
+        df = df[np.isin(df, ['[]']).any(axis=1)]
+        st.write(df)
 
-# def selectLocAndAuth():
-#     df = loadData()
-#     location = st.multiselect("choose Location of tweets", list(df['place_coordinate'].unique()))
-#     lang = st.multiselect("choose lang of tweets", list(df['lang'].unique()))
+def selectLocAndAuth():
+    st.title('Filter Tweets By Location')
+    df = loadData()
+    location = st.multiselect("choose Location of tweets", list(df['place'].unique()))
 
-#     if location and not lang:
-#         df = df[np.isin(df, location).any(axis=1)]
-#         st.write(df)
-#     elif lang and not location:
-#         df = df[np.isin(df, lang).any(axis=1)]
-#         st.write(df)
-#     elif lang and location:
-#         location.extend(lang)
-#         df = df[np.isin(df, location).any(axis=1)]
-#         st.write(df)
-#     else:
-#         st.write(df)
+    if location:
+        st.title('Filter Data By Location')
+        df = df[np.isin(df, location).any(axis=1)]
+        st.write(df)
+    else:
+        st.write(df)
 
 def barChart(data, title, X, Y):
     title = title.title()
@@ -55,7 +53,7 @@ def wordCloud():
 
         cleanText += " ".join(tokens) + " "
 
-    wc = WordCloud(width=650, height=450, background_color='white', min_font_size=5).generate(cleanText)
+    wc = WordCloud(width=1000, height=550, background_color='gray', max_words=100,  min_font_size=3).generate(cleanText)
     st.title("Tweet Text Word Cloud")
     st.image(wc.to_array())
 
@@ -87,13 +85,40 @@ def langPie():
     with colB2:
         st.write(dfLangCount)
 
+def placePie():
+    df = loadData()
+    dfPlaceCount = pd.DataFrame({'Tweet_count': df.groupby(['place'])['original_text'].count()}).reset_index()
+    dfPlaceCount["place"] = dfPlaceCount["place"].astype(str)
+    dfPlaceCount = dfPlaceCount.sort_values("Tweet_count", ascending=False)
+    dfPlaceCount = dfPlaceCount[dfPlaceCount['place'] != '0']
+    dfPlaceCount = dfPlaceCount.head(-1000)
+    dfPlaceCount.loc[dfPlaceCount['Tweet_count'] < 20, 'place'] = 'Other languages'
+    st.title(" Tweets Location pie chart")
+    fig = px.pie(dfPlaceCount, values='Tweet_count', names='place', width=500, height=350)
+    fig.update_traces(textposition='inside', textinfo='percent+label')
 
-st.title("Data Display")
-selectHashTag()
-st.markdown("<p style='padding:10px; background-color:#000000;color:#00ECB9;font-size:16px;border-radius:10px;'>Section Break</p>", unsafe_allow_html=True)
-#selectLocAndAuth()
-st.title("Data Visualizations")
+    colB1, colB2 = st.beta_columns([2.5, 1])
+
+    with colB1:
+        st.plotly_chart(fig)
+    with colB2:
+        st.write(dfPlaceCount)
+
+
+
+st.title("Twitter Data Analysis")
 wordCloud()
-with st.beta_expander("Show More Graphs"):
-    stBarChart()
-    langPie()
+st.markdown("<p style='padding:4px; background-color:gray;color:#00ECB9;font-size:16px;border-radius:6px;'></p>", unsafe_allow_html=True)
+selectHashTag()
+st.markdown("<p style='padding:4px; background-color:gray;color:#00ECB9;font-size:16px;border-radius:6px;'></p>", unsafe_allow_html=True)
+selectLocAndAuth()
+st.markdown("<p style='padding:4px; background-color:gray;color:#00ECB9;font-size:16px;border-radius:6px;'></p>", unsafe_allow_html=True)
+st.title("Data Visualizations")
+stBarChart()
+st.markdown("<p style='padding:4px; background-color:gray;color:#00ECB9;font-size:16px;border-radius:6px;'></p>", unsafe_allow_html=True)
+langPie()
+st.markdown("<p style='padding:4px; background-color:gray;color:#00ECB9;font-size:16px;border-radius:6px;'></p>", unsafe_allow_html=True)
+
+with st.beta_expander("Show More Graphs"): 
+    placePie()
+    # langPie()
