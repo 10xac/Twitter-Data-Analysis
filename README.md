@@ -36,7 +36,19 @@ sudo apt install python3-pip
    ```bash
     pip3 install requirements.txt
    ```
-1. Run the App
+1. Extract dataframe
+   ```bash
+   python3 extract_dataframe.py
+   ```
+1. Clean Extracted DataFrame
+   ```bash
+   python3 clean_tweets_dataframe
+   ```
+1. Add Dataframe data into sql database  #pls add your databasename, db password, db username to db.yaml file first
+   ```bash
+   python3 data.py
+   ```
+3. Run the App
    ```bash
     streamlit run main.py
 
@@ -47,6 +59,19 @@ sudo apt install python3-pip
 
 Topic Modeling for twtter data can be found in twitter_modeling.ipynb jupyter notebook file.
 
+
+## Unit Testing
+
+The following code enables you ti run unit test
+
+1. Get into Test Directory
+```bash
+   cd tests
+   ```
+1. Run Test
+   ```bash
+   python3 test_extract_dataframe.py
+   ```
 
 ### So here are the bare minimum requirement for completing this task
 
