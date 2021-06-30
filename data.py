@@ -3,6 +3,8 @@ import os
 import pandas as pd
 from mysql.connector import Error
 import yaml
+import logging
+logging.basicConfig(level=logging.INFO)
     
 db = yaml.load(open('db.yaml'))
 host = db['mysql_host']
@@ -33,7 +35,7 @@ def createDB(dbName: str) -> None:
     Returns
     -------
     """
-    print('REACHED HERE')
+    logging.info("Reached this code block")
     conn, cur = DBConnect()
     print('REACHED HERE2')
     cur.execute(f"CREATE DATABASE IF NOT EXISTS {dbName};")
@@ -64,7 +66,7 @@ def createTables(dbName: str) -> None:
         try:
             res = cur.execute(command)
         except Exception as ex:
-            print("Command skipped: ", command)
+            logging.error("Hypotenuse of {a}, {b} is {c}".format(a=3, b=4, c=hypotenuse(a,b)))
             print(ex)
     conn.commit()
     cur.close()
@@ -88,7 +90,7 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         df = df.drop(columns=cols_2_drop, axis=1)
         df = df.fillna(0)
     except KeyError as e:
-        print("Error:", e)
+        logging.error("Error {}".format(e))
 
     return df
 
@@ -133,10 +135,10 @@ def insert_to_tweet_table(dbName: str, df: pd.DataFrame, table_name: str) -> Non
             cur.execute(sqlQuery, data)
             # Commit your changes in the database
             conn.commit()
-            print("Data Inserted Successfully")
+            logging.info("Data Inserted Successfully")
         except Exception as e:
             conn.rollback()
-            print("Error: ", e)
+            logging.error("Error {}".format(e))
     return
 
 def db_execute_fetch(*args, many=False, tablename='', rdf=True, **kwargs) -> pd.DataFrame:
