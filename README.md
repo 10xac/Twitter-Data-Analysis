@@ -1,5 +1,51 @@
 # Twitter-Data-Analysis
 
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+## Prerequisites (Linux)
+- Python
+
+```bash
+sudo add-apt-repository ppa:jonathonf/python-3.7
+sudo apt-get update
+sudo apt-get install python3.7
+```
+
+- pip3
+
+```bash
+sudo apt update
+sudo apt install python3-pip
+```
+
+
+
+## Installing
+
+### For Development
+
+1. Clone the Repo
+   ```bash
+    git clone https://github.com/nebasam/Twitter-Data-Analysis.git
+   ```
+1. cd into repo
+   ```bash
+   cd Twitter-Data-Analysis
+   ```
+1. Install Requirements
+   ```bash
+    pip3 install requirements.txt
+   ```
+1. Run the App
+   ```bash
+    streamlit run main.py
+
+
+
+##Topic Modeling
+Topic Modeling for twtter data can be found in twitter_modeling.ipynb jupyter notebook file.
+
+
 ### So here are the bare minimum requirement for completing this task
 
 1. Fork repository to your github account
