@@ -53,8 +53,7 @@ sudo apt install python3-pip
     streamlit run main.py
 
 
-
-##Topic Modeling
+## Topic Modeling
 
 
 Topic Modeling for twtter data can be found in twitter_modeling.ipynb jupyter notebook file.
