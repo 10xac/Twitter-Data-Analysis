@@ -34,57 +34,84 @@ class TweetDfExtractor:
         self.tweets_list = tweets_list
 
     # an example function
-    def find_statuses_count(self)->list:
-        statuses_count 
+    def find_statuses_count(self):
+         self.assertEqual(self.df.find_statuses_count())
         
-    def find_full_text(self)->list:
-        text = 
+    def find_full_text(self):
+        self.assertEqual(self.df.find_full_text(), "name of the text(object)")
        
     
-    def find_sentiments(self, text)->list:
+    def find_sentiments(self, text):
         
-        return polarity, self.subjectivity
+        self_1=self.assertEqual(self.df.find_sentiments(self.df.find_full_text()),text)
+        
+        
+        return self_1
 
-    def find_created_time(self)->list:
-       
-        return created_at
+    def find_created_time(self):
+        created=self.assertEqual(self.df.find_created_time())
+        return created
 
-    def find_source(self)->list:
-        source = 
-
+    def find_source(self):
+        
+        source = ['']
+        self.assertEqual(self.df.find_source(), source)
         return source
 
-    def find_screen_name(self)->list:
-        screen_name = 
 
-    def find_followers_count(self)->list:
-        followers_count = 
 
-    def find_friends_count(self)->list:
-        friends_count = 
 
-    def is_sensitive(self)->list:
-        try:
-            is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
-        except KeyError:
-            is_sensitive = None
 
-        return is_sensitive
+    def find_screen_name(self):
+        screen_name1 = ["put all name"]
+        self.assertEqual(self.df.find_screen_name(), screen_name1)
+        
+        
+        
+        
+
+    def find_followers_count(self):
+        self.assertEqual(self.df.find_followers_count())
+        
+        
+        
+        
+
+    def find_friends_count(self):
+        friends_count = self.assertEqual(self.df.find_friends_count())
+        return friends_count 
+
+
+
+
+    self=list
+    def is_sensitive(self):
+       s01= self.assertEqual(self.df.sensitive())
+       return s01
+   
+    
+   
+    
 
     def find_favourite_count(self)->list:
-        
+        self.assertEqual(self.df.find_favourite_count())
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+         self.assertEqual(self.df.find_retweet_count())
 
     def find_hashtags(self)->list:
-        hashtags =
+        hashtags =self.assertEqual(self.df.find_hashtags())
+        return hashtags
+    
+    
+    
+    
+   # def find_mentions(self)->list:
+        
+        
 
-    def find_mentions(self)->list:
-        mentions = 
 
-
-    def find_location(self)->list:
+    def find_location(self):
         try:
             location = self.tweets_list['user']['location']
         except TypeError:
@@ -134,5 +161,3 @@ if __name__ == "__main__":
     tweet_df = tweet.get_tweet_df() 
 
     # use all defined functions to generate a dataframe with the specified columns above
-
-    
