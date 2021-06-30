@@ -13,9 +13,10 @@ install:
   - pip install -r requirements.txt
 
 # cache installation
-cache:
-  - pip
+cache: pip
+
+install: "pip install -r requirements.text
 
 # Command to run tests, e.g. python setup.py test
-script:
-  - python -m unittest tests.test_extract_dataframe
+script:  python  clean_tweets_dataframe.py
+

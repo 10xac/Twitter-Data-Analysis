@@ -1,0 +1,59 @@
+Abstract: Tweet Analytisis allows me to view audience insights for all Twitter users, 
+ followers and organic audience. Additionally. It is very important to know how people  thinks about some subject  and they  feelings. The data anlysis used is call Sentiment
+ Analysis using the package  Scikit-Learn, gensim etc.., which analyse  word in order to get  the sentiments.
+ 
+ Introduction :
+ Sentiment analysis refers to identifying as well as classifying the sentiments that are expressed in the text source. Tweets are often useful in generating a vast amount of 
+ sentiment data upon analysis. These data are useful in understanding the opinion of the people about a variety of topics.Therefore we need to develop an Automated 
+ Machine Learning Sentiment Analysis Model in order to compute the customer perception. Due to the presence of non-useful characters (collectively termed as the noise) 
+ along with useful data, it becomes difficult to implement models on them.After we selected  audience, we can see things like:Top Interest(The subject most likely to be in 
+ common with your audience),Top Language( The top language among your audience), Top Interest Type (The most common lifestyle category for your audience).
+ MLOps is a practice for collaboration and communication between data scientists and operations professionals to help manage the production ML lifecycle. It is an
+ ML engineering culture and practice that aims at unifying ML system development (Dev) and ML system operation (Ops).  MLOps drives insights you can trust and put into play 
+ more quickly in a controlled manner.  It provides the ability to understand or value something/someone quite new to you.
+ 
+ Data:
+The dataset was downloaded directly from Twitter Developer Platform  using the link "https://developer.twitter.com/en" after registration. I used the Twitter API to firstly 
+download daatset, in order to  listen to and analyze the public conversation, engage with people on Twitter,
+and innovate . The data  contains 5621 rows  and 21 columns which represent variables . 
+
+
+
+
+Methods :
+Practicing MLOps means that you advocate for automation and monitoring at all steps of ML system construction, including integration, testing, 
+releasing, deployment and infrastructure management.
+
+The steps include:
+
+a data pipeline providing up-to-date, validated and preprocessed data (Feature Store)
+an development environment to experiment with building models
+a training pipeline that allows you to create ML models from the data
+a continuous training pipeline that automates created training pipelines
+a model deployment process that allows you to take your (chosen) model to production
+a model performance monitoring process that (automatically) checks if model performance is still good or decaying.
+
+
+Firstly , all codes I wrote was sent   on GitHub  in order to check the  pleausibily and to share  what my script and i merge the branch containing my script to master. I 
+after that associate  my GitHub to TRAVIS-CI,  which allow me to use the unittest and check step by step  each code i impleament . 
+the unittests allowed to test new code in existing code base and people can proceed to implement new functionalities to your code. To well analysis the data 
+I after make a data pre-processing (e.g. can easily impute missing values, make an automatic normalisation and transformation ) using package such as  pandas, numpy. 
+I make	Topic modelling and sentiment analysis using scikit-learn, Gensim to model the topics discussed in the tweets and their sentiments.
+
+
+
+Results: 
+I got some beautifull picture of words which describing the most used word  , using by people  to describe covid-19   under package  as world_cloud. 
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
