@@ -7,12 +7,16 @@ from wordcloud import WordCloud
 import plotly.express as px
 # from nltk.corpus import stopwords
 from data import db_execute_fetch
+import logging
+logging.basicConfig(level=logging.INFO)
+
 
 st.set_page_config(page_title="Tweeter Sentiment Analysis", layout="wide")
 
 def loadData():
     query = "select * from TweetInformation"
     df = db_execute_fetch(query, dbName="tweets", rdf=True)
+    logging.info("Data Loaded")
     return df
 
 def selectHashTag():
