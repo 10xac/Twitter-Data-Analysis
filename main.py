@@ -20,6 +20,7 @@ def loadData():
     return df
 
 def selectHashTag():
+    # select hashtag
     st.title('Filter Tweets By HashTag')
     df = loadData()
     hashTags = st.multiselect("choose combaniation of hashtags", list(df['hashtags'].unique()))
