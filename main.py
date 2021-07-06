@@ -32,6 +32,7 @@ def selectHashTag():
         st.write(df)
 
 def selectLocAndAuth():
+    # selectlocandauth
     st.title('Filter Tweets By Location')
     df = loadData()
     location = st.multiselect("choose Location of tweets", list(df['place'].unique()))
