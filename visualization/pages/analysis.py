@@ -8,8 +8,8 @@ def app():
     st.title("Twitter Data Analysis Visualization")
 
     st.header("Data Analysis")
-    processed_tweets = pd.read_csv('./../data/processed_tweet_data.csv')
-    model_ready_tweets = pd.read_csv('./../data/model_ready_data.csv')
+    processed_tweets = pd.read_csv('data/processed_tweet_data.csv')
+    model_ready_tweets = pd.read_csv('data/model_ready_data.csv')
     model_ready_tweets.clean_text = model_ready_tweets.clean_text.astype(str)
 
     st.header("I. From Processed Tweets")

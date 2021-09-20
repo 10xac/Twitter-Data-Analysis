@@ -6,10 +6,14 @@ import streamlit as st
 import altair as alt
 from wordcloud import WordCloud
 import plotly.express as px
+try:
+    sys.path.append(os.path.abspath(os.path.join('sql')))
+    print(sys.path)
+    from add_data import db_execute_fetch
 
-sys.path.append(os.path.abspath(os.path.join('../sql')))
-
-from add_data import db_execute_fetch
+except Exception as e:
+    print(e)
+    sys.exit(1)
 
 
 def loadData():
@@ -55,6 +59,7 @@ def selectLocAndLang():
         st.write(df)
     else:
         st.write(df)
+
 
 def mostFollowedUsers():
     df = loadData()
