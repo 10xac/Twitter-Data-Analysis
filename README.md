@@ -1,6 +1,6 @@
 # Twitter-Data-Analysis
 
-### So here are the bare minimum requirement for completing this task
+## So here are the bare minimum requirement for completing this task
 
 1. Fork repository to your github account
 2. Create a branch called “fix_bug” to fix the bugs in the fix_clean_tweets_dataframe.py and fix_extract_dataframe.py 
