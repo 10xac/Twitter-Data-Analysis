@@ -111,10 +111,6 @@ class TweetDfExtractor:
     
         return retweet_count
 # TODO: Start from here
-    def find_hashtags(self)->list:
-        hashtags = []
-        for tw in self.tweets_list:
-            hashtags.append(", ".join([hashtag_item['text'] for hashtag_item in tw['entities']['hashtags']]))
 
     def find_hashtags(self) -> list:
         hashtags = [tw.get('entities', {}).get('hashtags', None)
@@ -168,8 +164,6 @@ class TweetDfExtractor:
             print('File Successfully Saved.!!!')
             
         return df
-
-    
                     
 def find_full_text(self)->list:
     try:

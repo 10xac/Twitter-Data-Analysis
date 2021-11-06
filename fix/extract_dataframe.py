@@ -7,7 +7,9 @@ def read_json(json_file: str)->list:
     for tweets in open(json_file,'r'):
         tweets_data.append(json.loads(tweets))
     return len(tweets_data), tweets_data
+
 class TweetDfExtractor:
+    
     def __init__(self, tweets_list):
         self.tweets_list = tweets_list
 
@@ -75,3 +77,8 @@ class TweetDfExtractor:
                 retweet_count.append(tweet['retweeted_status']['retweet_count'])
             else: retweet_count.append(0)
         return retweet_count
+
+    def find_hashtags(self) -> list:
+      hashtags = [tw.get('entities', {}).get('hashtags', None)
+                for tw in self.tweets_list]
+      return hashtags
