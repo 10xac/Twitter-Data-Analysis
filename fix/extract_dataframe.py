@@ -82,11 +82,11 @@ class TweetDfExtractor:
       hashtags = [tw.get('entities', {}).get('hashtags', None)
                 for tw in self.tweets_list]
       return hashtags
-# TODO: the List Comprehensions didn't work FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
+
     def find_mentions(self)->list:
         mentions = []
         for tw in self.tweets_list:
-            mentions.append( ", ".join([mention['screen_name'] for mention in tw['entities']['user_mentions']]))
+            mentions.append(", ".join([mention['screen_name'] for mention in tw['entities']['user_mentions']]))
         return mentions
 
     def find_lang(self)->list:
@@ -122,19 +122,6 @@ class TweetDfExtractor:
             df.to_csv('Twitter-Data-Analysis/data/processed_tweet_data.csv', index=False)
             print('File Successfully Saved.!!!')
         return df
-
-# def find_full_text(self)->list:
-#     try:
-#         retweeted_status = [x.get("retweeted_status", {}) for x in self.tweets_list]
-#         text =[(x.get("extended_tweet", {})).get("full_text", None) for x in retweeted_status]
-#         filtered = []
-#         for x in text:
-#             if x != None:
-#                 filtered.append(x)
-#                 text = ''.join(filtered)
-#     except KeyError:
-#         text = ''
-#     return text
 
 if __name__ == "__main__":
     _, tweet_list = read_json("Twitter-Data-Analysis/data/covid19.json")
