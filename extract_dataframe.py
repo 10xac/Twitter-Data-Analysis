@@ -110,7 +110,6 @@ class TweetDfExtractor:
             else: retweet_count.append(0)
     
         return retweet_count
-# TODO: Start from here
 
     def find_hashtags(self) -> list:
         hashtags = [tw.get('entities', {}).get('hashtags', None)

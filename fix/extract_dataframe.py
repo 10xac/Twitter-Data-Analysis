@@ -9,7 +9,7 @@ def read_json(json_file: str)->list:
     return len(tweets_data), tweets_data
 
 class TweetDfExtractor:
-    
+
     def __init__(self, tweets_list):
         self.tweets_list = tweets_list
 
@@ -82,3 +82,10 @@ class TweetDfExtractor:
       hashtags = [tw.get('entities', {}).get('hashtags', None)
                 for tw in self.tweets_list]
       return hashtags
+# TODO: the List Comprehensions didn't work FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
+    def find_mentions(self)->list:
+        mentions = []
+        for tw in self.tweets_list:
+            mentions.append( ", ".join([mention['screen_name'] for mention in tw['entities']['user_mentions']]))
+        return mentions
+
