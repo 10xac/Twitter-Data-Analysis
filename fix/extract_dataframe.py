@@ -93,4 +93,10 @@ class TweetDfExtractor:
         lang = [x['lang'] for x in self.tweets_list]    
         return lang
 
+    def find_location(self)->list:
+        location = []
+        for tweet in self.tweets_list:
+            location.append(tweet['user']['location'])
+        return location
+
         
