@@ -89,3 +89,8 @@ class TweetDfExtractor:
             mentions.append( ", ".join([mention['screen_name'] for mention in tw['entities']['user_mentions']]))
         return mentions
 
+    def find_lang(self)->list:
+        lang = [x['lang'] for x in self.tweets_list]    
+        return lang
+
+    
