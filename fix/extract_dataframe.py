@@ -119,8 +119,24 @@ class TweetDfExtractor:
         data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
         if save:
-            df.to_csv('processed_tweet_data.csv', index=False)
+            df.to_csv('Twitter-Data-Analysis/data/processed_tweet_data.csv', index=False)
             print('File Successfully Saved.!!!')
         return df
 
-        
+# def find_full_text(self)->list:
+#     try:
+#         retweeted_status = [x.get("retweeted_status", {}) for x in self.tweets_list]
+#         text =[(x.get("extended_tweet", {})).get("full_text", None) for x in retweeted_status]
+#         filtered = []
+#         for x in text:
+#             if x != None:
+#                 filtered.append(x)
+#                 text = ''.join(filtered)
+#     except KeyError:
+#         text = ''
+#     return text
+
+if __name__ == "__main__":
+    _, tweet_list = read_json("Twitter-Data-Analysis/data/covid19.json")
+    tweet = TweetDfExtractor(tweet_list)
+    df = tweet.get_tweet_df(True)
