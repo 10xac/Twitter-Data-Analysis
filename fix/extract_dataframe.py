@@ -93,4 +93,4 @@ class TweetDfExtractor:
         lang = [x['lang'] for x in self.tweets_list]    
         return lang
 
-    
+        
