@@ -1,15 +1,15 @@
 import unittest
 import pandas as pd
-import sys, os
- 
-sys.path.append(os.path.abspath(os.path.join('../..')))
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join('/Users/alex/Desktop/10_acadamy/Twitter-Data-Analysis')))
 
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
 
-_, tweet_list = read_json("data/covid19.json")
+_, tweet_list = read_json("/Users/alex/Desktop/10_acadamy/Twitter-Data-Analysis/data/covid19.json")
 
-columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
+columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count',
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
 
 
@@ -25,7 +25,7 @@ class TestTweetDfExtractor(unittest.TestCase):
 
     def setUp(self) -> pd.DataFrame:
         self.df = TweetDfExtractor(tweet_list[:5])
-        # tweet_df = self.df.get_tweet_df()         
+        # tweet_df = self.df.get_tweet_df()
 
 
     def test_find_statuses_count(self):
@@ -47,7 +47,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_created_time(), created_at)
 
     def test_find_source(self):
-        source = ['<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>', '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>', 
+        source = ['<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>', '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>',
         '<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>', '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>',
          '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>']
 
@@ -74,16 +74,14 @@ class TestTweetDfExtractor(unittest.TestCase):
     def test_find_retweet_count(self):
         self.assertEqual(self.df.find_retweet_count(), [612, 92, 1, 899, 20])
 
-    # def test_find_hashtags(self):
-    #     self.assertEqual(self.df.find_hashtags(), )
+    #def test_find_hashtags(self):
+        #self.assertEqual(self.df.find_hashtags(), )
 
-    # def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), )
+    #def test_find_mentions(self):
+        #self.assertEqual(self.df.find_mentions(),)
 
     def test_find_location(self):
         self.assertEqual(self.df.find_location(), ['Mass', 'Edinburgh, Scotland', None, None, 'United Kingdom'])
 
 if __name__ == '__main__':
 	unittest.main()
-
-    
