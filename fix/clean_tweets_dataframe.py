@@ -20,4 +20,13 @@ class CleanTweets:
         self.df['polarity'] = pd.to_numeric(self.df['polarity'], errors='coerce')
         self.df['retweet_count'] = pd.to_numeric(self.df['retweet_count'], errors='coerce')
         self.df['favorite_count'] = pd.to_numeric(self.df['favorite_count'], errors='coerce')
+        return self.df
+    def remove_non_english_tweets(self)->pd.DataFrame:
+            self.df = self.df.query(" lang == 'en' ")
+            return self.df
+            
+if __name__ == "__main__":
+    tweet_df = pd.read_csv("Twitter-Data-Analysis/data/processed_tweet_data.csv")
+    cleaner = CleanTweets(tweet_df)
+    
     
