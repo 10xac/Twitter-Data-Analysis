@@ -7,6 +7,11 @@ python:
   - '3.7'
   - '3.6'
 
+branches:
+  only:
+    -main
+    -master
+    -make_unittest
 
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
@@ -19,4 +24,4 @@ cache:
 # Command to run tests, e.g. python setup.py test
 script:
   - python -m unittest tests.test_extract_dataframe
-  - python -m unittest tests.test_clean_tweets_dataframe
+#  - python -m unittest tests.test_clean_tweets_dataframe
