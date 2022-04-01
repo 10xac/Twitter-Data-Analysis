@@ -5,7 +5,8 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 from wordcloud import WordCloud
-import plotly.express as px
+#import plotly.express as px
+
 try:
     sys.path.append(os.path.abspath(os.path.join('sql')))
     print(sys.path)
