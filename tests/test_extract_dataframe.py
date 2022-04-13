@@ -78,8 +78,9 @@ class TestTweetDfExtractor(unittest.TestCase):
         hashtags=[[],[],[{'text': 'red4research', 'indices': [103, 116]}],[],[]]
         self.assertEqual(self.df.find_hashtags(),hashtags )
 
-    #def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), )
+    def test_find_mentions(self):
+        mentions=['TelGlobalHealth, WHOAFRO','globalhlthtwit','NHSRDForum, Research2note, NHSRDForum','HighWireTalk','PeterHotez']
+        self.assertEqual(self.df.find_mentions(), mentions)
 
     def test_find_location(self):
         self.assertEqual(self.df.find_location(), ['Mass', 'Edinburgh, Scotland', None, None, 'United Kingdom'])
