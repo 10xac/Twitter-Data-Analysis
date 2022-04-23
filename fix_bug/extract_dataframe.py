@@ -33,11 +33,13 @@ class TweetDfExtractor:
         
         self.tweets_list = tweets_list
 
+    # an example function using list comprehension
     def find_statuses_count(self)->list:
         statuses_count = [x['user']['statuses_count'] for x in self.tweets_list]
 
         return statuses_count
         
+           
     def find_full_text(self)->list:
         text = []
         for tweet in self.tweets_list:
@@ -59,7 +61,7 @@ class TweetDfExtractor:
 
     def find_created_time(self)->list:
         created_at = [x['created_at'] for x in self.tweets_list]
-        
+
         return created_at
 
     def find_source(self)->list:
@@ -100,6 +102,7 @@ class TweetDfExtractor:
             else: favorite_count.append(0)
     
         return favorite_count
+        
     
     def find_retweet_count(self)->list:
         
