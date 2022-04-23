@@ -25,7 +25,7 @@ class TestTweetDfExtractor(unittest.TestCase):
 
     def setUp(self) -> pd.DataFrame:
         self.df = TweetDfExtractor(tweet_list[:5])
-        # tweet_df = self.df.get_tweet_df()         
+        tweet_df = self.df.get_tweet_df()         
 
 
     def test_find_statuses_count(self):
