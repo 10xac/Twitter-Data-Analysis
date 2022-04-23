@@ -26,7 +26,9 @@ class CleanTweets:
         """
         drop duplicate rows
         """
-        
+        """
+        Return DataFrame with duplicate columns removed.
+        """
         self.df = self.df.drop_duplicates().drop_duplicates(subset='original_text')
         
         return df
