@@ -1,4 +1,6 @@
 import json
+# import datetime to show the time it was created at
+import datetime 
 import pandas as pd
 from textblob import TextBlob
 
@@ -46,8 +48,9 @@ class TweetDfExtractor:
         return polarity, self.subjectivity
 
     def find_created_time(self)->list:
-       
+        created_at = datetime.date.today()
         return created_at
+
 
     def find_source(self)->list:
         source = 
