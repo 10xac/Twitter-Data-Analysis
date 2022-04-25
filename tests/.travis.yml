@@ -1,5 +1,6 @@
 # Config file for automatic testing at travis-ci.com
 language: python
+
 python:
   - '3.9'
   - '3.8'
@@ -18,4 +19,3 @@ cache:
 # Command to run tests, e.g. python setup.py test
 script:
   - python -m unittest tests.test_extract_dataframe
-  - python -m unittest tests.test_clean_tweets_dataframe
