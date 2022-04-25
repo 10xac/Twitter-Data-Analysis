@@ -1,3 +1,5 @@
+import pandas as pd
+from extract_dataframe import read_json,TweetDfExtractor
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
@@ -13,7 +15,7 @@ class Clean_Tweets:
         """
         unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
         df.drop(unwanted_rows , inplace=True)
-        df = df[df['polarity'] != 'polarity']
+        # df = df[df['polarity'] != 'polarity']
         
         return df
     def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
@@ -21,18 +23,15 @@ class Clean_Tweets:
         drop duplicate rows
         """
         
-        ---
-        
+        df["original_text"]=df["original_text"].astype(str)
+        df.drop_duplicates(subset=["original_text"] , inplace=True)
+
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        ----
-        
-        ----
-        
-        df = df[df['created_at'] >= '2020-12-31' ]
+        df['created_at']=pd.to_datetime(df['created_at'], format='%a %b %d %H:%M:%S %z %Y')
         
         return df
     
@@ -41,10 +40,14 @@ class Clean_Tweets:
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
-        df['polarity'] = pd.----
+        df['polarity'] = pd.to_numeric(df['polarity'],errors='coerce')
+        df['subjectivity'] = pd.to_numeric(df['subjectivity'],errors='coerce')
+        df['retweet_count'] = pd.to_numeric(df['retweet_count'],errors='coerce')
+        df['favorite_count'] = pd.to_numeric(df['favorite_count'],errors='coerce')
         
-        ----
-        ----
+        df['followers_count'] = pd.to_numeric(df['followers_count'],errors='coerce')
+        
+        df['friends_count'] = pd.to_numeric(df['friends_count'],errors='coerce')
         
         return df
     
@@ -52,7 +55,8 @@ class Clean_Tweets:
         """
         remove non english tweets from lang
         """
-        
-        df = ----
+        unwanted_rows=df[df['lang'] != "en"].index
+
+        df.drop(unwanted_rows ,inplace=True)
         
         return df
