@@ -35,34 +35,38 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count 
         
+        status_count = tweets_list.status_count
+        return status_count
+    
     def find_full_text(self)->list:
-        text = 
-       
+        text = tweets_list.text
+        return text
     
     def find_sentiments(self, text)->list:
         
         return polarity, self.subjectivity
 
     def find_created_time(self)->list:
+        created_at = tweets_list.created_at
        
         return created_at
-
     def find_source(self)->list:
-        source = 
+        source = tweets_list.source
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = tweets_list.user.screen_name
+        return screen_name
 
     def find_followers_count(self)->list:
-        followers_count = 
+        followers_count = tweets_list.followers_count
+        return followers_count
 
     def find_friends_count(self)->list:
-        friends_count = 
-
+        friends_count = tweets_list.friends_count
+        return friends_count
     def is_sensitive(self)->list:
         try:
             is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
@@ -70,18 +74,25 @@ class TweetDfExtractor:
             is_sensitive = None
 
         return is_sensitive
-
-    def find_favourite_count(self)->list:
-        
-    
+     def find_favourite_count(self)->list:
+        favorites_count= tweets_list.favorites_count
+        return favorites_count
+    def find_lang(self)->list:
+        lang= tweets_list.favorites_count
+        return favorites_count
     def find_retweet_count(self)->list:
-        retweet_count = 
+        retweet_count = tweets_list.retweets_count
+        return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags =
+        hashtags =tweets_list.hashtags
+        return hastags
 
     def find_mentions(self)->list:
-        mentions = 
+        mentions = tweets_list.user_mentions
+        return mentions
+
+
 
 
     def find_location(self)->list:
@@ -129,10 +140,11 @@ if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("../covid19.json")
+    tweet_list = read_json(""Twitter-Data-Analysis/data/Economic_Twitter_Data/Economic_Twitter_Data.json"")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
 
     # use all defined functions to generate a dataframe with the specified columns above
+    
 
     
