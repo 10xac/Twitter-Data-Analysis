@@ -62,3 +62,8 @@ class CleanTweets:
         """
         self.df = self.df.query("lang == en")
         return self.df
+
+
+if __name__ == '__main__':
+    tw_df = pd.read_csv("data/processed.csv")
+    clean = CleanTweets(tw_df)
