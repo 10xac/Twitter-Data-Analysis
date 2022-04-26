@@ -1,1 +1,1 @@
-"""Unit test package for TweetFExtractor."""
+# tests for ExtractTweet class

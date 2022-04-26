@@ -1,87 +1,124 @@
 import unittest
 import pandas as pd
-import sys, os
- 
-sys.path.append(os.path.abspath(os.path.join('../..')))
-
-from extract_dataframe import read_json
-from extract_dataframe import TweetDfExtractor
-
-_, tweet_list = read_json("data/covid19.json")
-
-columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
-    'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
+from extract_dataframe import ExtractTweets
 
 
-class TestTweetDfExtractor(unittest.TestCase):
+
+
+
+class TestExtractTweeets(unittest.TestCase):
     """
-		A class for unit-testing function in the fix_clean_tweets_dataframe.py file
-
-		Args:
-        -----
-			unittest.TestCase this allows the new class to inherit
-			from the unittest module
+    - A class that tests the Extracts Tweet functions
 	"""
 
-    def setUp(self) -> pd.DataFrame:
-        self.df = TweetDfExtractor(tweet_list[:5])
-        # tweet_df = self.df.get_tweet_df()         
 
+    def setUp(self) -> pd.DataFrame:
+        """
+        - this function tests the setup for the environment
+        """
+        self.tweets = ExtractTweets("/home/martin/Documents/Dscience/Economic_Twitter_Data.json")
+        self.df = self.tweets.get_tweet_df(save=False)
 
     def test_find_statuses_count(self):
-        self.assertEqual(self.df.find_statuses_count(), [204051, 3462, 6727, 45477, 277957])
+        """
+        -this function tests the status count function
+        """
+        status_counts = self.tweets.find_statuses_count()
+        for status_count in status_counts:
+            self.assertIsInstance(status_count,(int))
 
     def test_find_full_text(self):
-        text = ['🚨Africa is "in the midst of a full-blown third wave" of coronavirus, the head of @WHOAFRO has warned\n\nCases have risen across the continent by more than 20% and deaths have also risen by 15% in the last week\n\n@jriggers reports ~ 🧵\nhttps://t.co/CRDhqPHFWM', 'Dr Moeti is head of WHO in Africa, and one of the best public health experts and leaders I know. Hers is a desperate request for vaccines to Africa. We plead with Germany and the UK to lift patent restrictions and urgently transfer technology to enable production in Africa. https://t.co/sOgIroihOc', "Thank you @research2note for creating this amazing campaign &amp; turning social media #red4research today. @NHSRDFORUM is all about sharing the talent, passion  &amp; commitment of individuals coming together as a community for the benefit of all. You've done this. Well done 👋", 'Former Pfizer VP and Virologist, Dr. Michael Yeadon, is one of the most credentialed medical professionals speaking out about the dangers of the #Covid19 vaccines, breaks down his “list of lies” that keeps him up at night. https://t.co/LSE8CrKdqn', 'I think it’s important that we don’t sell COVAX short. It still has a lot going for it and is innovative in its design. But it needs more vaccines to share.  We’re hoping our low cost @TexasChildrens recombinant protein COVID19 vaccine with @biological_e will help fill some gaps']
-
-
-        self.assertEqual(self.df.find_full_text(), text)
+        """
+        - test the text results
+        """
+        for text in self.tweets.find_full_text():
+            self.assertIsInstance(text, (str))
 
     def test_find_sentiments(self):
-        self.assertEqual(self.df.find_sentiments(self.df.find_full_text()), ([0.16666666666666666, 0.13333333333333333, 0.3166666666666667, 0.08611111111111111, 0.27999999999999997], [0.18888888888888888, 0.45555555555555555, 0.48333333333333334, 0.19722222222222224, 0.6199999999999999]))
+        """
+        - testing finding the sentiments
+        """
+        polarity,subjectivity = self.tweets.find_sentiments(self.tweets.find_full_text())
+        for i,_ in enumerate(polarity):
+            self.assertIsInstance(polarity[i], (int,float))
+            self.assertIsInstance(subjectivity[i], (int,float))
 
     def test_find_created_time(self):
-        created_at = ['Fri Jun 18 17:55:49 +0000 2021', 'Fri Jun 18 17:55:59 +0000 2021', 'Fri Jun 18 17:56:07 +0000 2021',
-         'Fri Jun 18 17:56:10 +0000 2021', 'Fri Jun 18 17:56:20 +0000 2021']
-
-        self.assertEqual(self.df.find_created_time(), created_at)
+        """
+        - testing finding created time 
+        """
+        string_dates = self.tweets.find_created_time()
+        for date in string_dates:
+            self.assertIsInstance(date, (str))
 
     def test_find_source(self):
-        source = ['<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>', '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>', 
-        '<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>', '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>',
-         '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>']
-
-        self.assertEqual(self.df.find_source(), source)
-
+        """
+        - tests the find sources function
+        """
+        sources = self.tweets.find_source()
+        for source in sources:
+            self.assertEqual("href" in source,True)
+    
     def test_find_screen_name(self):
-        name = ['ketuesriche', 'Grid1949', 'LeeTomlinson8', 'RIPNY08', 'pash22']
-        self.assertEqual(self.df.find_screen_name(), name)
+        """
+        - tests the find screen names
+        """
+        screen_names = self.tweets.find_screen_name()
+        for name in screen_names:
+            self.assertIsInstance(name,(str))
+    
 
     def test_find_followers_count(self):
-        f_count = [551, 66, 1195, 2666, 28250]
-        self.assertEqual(self.df.find_followers_count(), f_count)
-
+        """
+        - tests the find follower counts function
+        """
+        followers_count = self.tweets.find_followers_count()
+        for follower in followers_count:
+            self.assertIsInstance(follower,(int))
+    
     def test_find_friends_count(self):
-        friends_count = [351, 92, 1176, 2704, 30819]
-        self.assertEqual(self.df.find_friends_count(), friends_count)
-
+        """
+        - tests the find friends counts function
+        """
+        friends_count = self.tweets.find_friends_count()
+        for friend in friends_count:
+            self.assertIsInstance(friend,(int))
+        
     def test_find_is_sensitive(self):
-        self.assertEqual(self.df.is_sensitive(), [None, None, None, None, None])
-
+        """
+        - tests the finding is sensitive function
+        """
+        is_sensitive = self.tweets.is_sensitive()
+        for is_sensitive_response in is_sensitive:
+            if is_sensitive_response:
+                self.assertIsInstance(is_sensitive_response,(bool,))
+            
+        
     def test_find_favourite_count(self):
-        self.assertEqual(self.df.find_favourite_count(), [548, 195, 2, 1580, 72])
-
+        """
+        - tests the finding favorite count function
+        """
+        favorites = self.tweets.find_favourite_count()
+        for favorite in favorites:
+            self.assertIsInstance(favorite,(int,))
+    
     def test_find_retweet_count(self):
-        self.assertEqual(self.df.find_retweet_count(), [612, 92, 1, 899, 20])
-
-    # def test_find_hashtags(self):
-    #     self.assertEqual(self.df.find_hashtags(), )
-
-    # def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), )
+        """
+        - tests the find retweet function
+        """
+        retweets = self.tweets.find_retweet_count()
+        for retweet in retweets:
+            self.assertIsInstance(retweet,(int))
 
     def test_find_location(self):
-        self.assertEqual(self.df.find_location(), ['Mass', 'Edinburgh, Scotland', None, None, 'United Kingdom'])
+        """
+        - tests the find location function
+        """
+        locations = self.tweets.find_location()
+        for location in locations:
+            if location:
+                self.assertIsInstance(location,(str,))
+
 
 if __name__ == '__main__':
 	unittest.main()
