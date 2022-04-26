@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 from textblob import TextBlob
-#to read the zipped data set we need to import this module
+# to read the zipped data set we need to import this module
 from zipfile import ZipFile
 
 
@@ -19,7 +19,7 @@ def read_json(json_file: str) -> list:
 
     tweets_data = []
     # openning the zip in READ mode
-    with ZipFile(json_file,'r') as zip_file:
+    with ZipFile(json_file, 'r') as zip_file:
     # extracting the zip
         zip_file.extractall("data/")
     for tweets in open(json_file, 'r'):
@@ -132,7 +132,7 @@ class TweetDfExtractor:
         # hashtags = self.find_hashtags()
         # mentions = self.find_mentions()
         # location = self.find_location()
-        # data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
+        data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
 
         if save:
