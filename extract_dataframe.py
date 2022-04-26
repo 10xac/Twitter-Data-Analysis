@@ -1,6 +1,6 @@
 import json
 import pandas as pd
-from textblob import TextBlob
+from textblob import TextBlob # import works
 
 def read_json(json_file: str)->list:
     """
@@ -20,7 +20,7 @@ def read_json(json_file: str)->list:
     
     
     return len(tweets_data), tweets_data
-    
+
 class TweetDfExtractor:
     """
     this function will parse tweets json into a pandas dataframe
@@ -33,114 +33,89 @@ class TweetDfExtractor:
         
         self.tweets_list = tweets_list
 
+    # an example function
     def find_statuses_count(self)->list:
-        statuses_count = [x['user']['statuses_count'] for x in self.tweets_list]
-
+        user = [x.get('user', {}) for x in self.tweets_list]
+        statuses_count = [x.get('statuses_count', 0) for x in user]
         return statuses_count
         
     def find_full_text(self)->list:
-        text = []
-        for tweet in self.tweets_list:
-            if 'retweeted_status' in tweet.keys() and 'extended_tweet' in tweet['retweeted_status'].keys():
-                text.append(tweet['retweeted_status']['extended_tweet']['full_text'])
-            else: text.append('Empty')
-
-        return text       
+        text = [x.get('retweeted_status', {}).get('extended_tweet',{}).get('full_text', '') \
+            for x in self.tweets_list]
+        return text
+       
     
-    def find_sentiments(self, text:list)->list:
-        polarity, subjectivity = [], []
-        for tweet in text:
-            blob = TextBlob(tweet)
-            sentiment = blob.sentiment
-            polarity.append(sentiment.polarity)
-            subjectivity.append(sentiment.subjectivity)
+    def find_sentiments(self, text)->list:
+        text = [x.get('retweeted_status', {}) for x in self.tweets_list]
+        extended_tweet = [x.get('extended_tweet', {}) for x in text]
+        full_text = [x.get('full_text', '') for x in extended_tweet]
 
+        sentimentedText = [TextBlob(x) for x in full_text]
+        polarity = []
+        subjectivity = []
+
+        for i in range(len(sentimentedText)):
+            polarity.append(sentimentedText[i].sentiment.polarity)
+            subjectivity.append(sentimentedText[i].sentiment.subjectivity)
+        
         return polarity, subjectivity
 
     def find_created_time(self)->list:
-        created_at = [x['created_at'] for x in self.tweets_list]
-
-        return created_at
+        created_time = [x.get('created_at', None) for x in self.tweets_list]
+        return created_time
 
     def find_source(self)->list:
-        source = [x['source'] for x in self.tweets_list]
+        source = [x.get('source', '') for x in self.tweets_list]
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = [x['user']['screen_name'] for x in self.tweets_list]
-
+        users = [x.get('user', {}) for x in self.tweets_list]
+        screen_name = [x.get('screen_name') for x in users]
         return screen_name
 
     def find_followers_count(self)->list:
-        followers_count = [x['user']['followers_count'] for x in self.tweets_list]
-
+        followers_count = [x.get('user', {}).get('followers_count', 0) for x in self.tweets_list]
         return followers_count
 
     def find_friends_count(self)->list:
-        friends_count = [x['user']['friends_count'] for x in self.tweets_list]
-
+        friends_count = [x.get('user', {}).get('friends_count', 0) for x in self.tweets_list]
         return friends_count
 
     def is_sensitive(self)->list:
-        is_sensitive = []
-        for tweet in self.tweets_list:
-            if 'possibly_sensitive' in tweet.keys():
-                is_sensitive.append(tweet['possibly_sensitive'])
-            else: is_sensitive.append(None)
-    
+        is_sensitive = [x.get('possibly_sensitive', None) for x in self.tweets_list]
+
         return is_sensitive
-       
 
     def find_favourite_count(self)->list:
-        favorite_count = []
-        for tweet in self.tweets_list:
-            if 'retweeted_status' in tweet.keys():
-                favorite_count.append(tweet['retweeted_status']['favorite_count'])
-            else: favorite_count.append(0)
-    
-        return favorite_count
+        fav_count = [x.get('retweeted_status', {}).get('favorite_count', 0) for x in self.tweets_list]
+        return fav_count
     
     def find_retweet_count(self)->list:
-        
-        retweet_count = []
-        for tweet in self.tweets_list:
-            if 'retweeted_status' in tweet.keys():
-                retweet_count.append(tweet['retweeted_status']['retweet_count'])
-            else: retweet_count.append(0)
-    
+        retweeted_status = [x.get('retweeted_status', {}) for x in self.tweets_list]
+        retweet_count = [x.get('retweet_count', None) for x in retweeted_status]
+
         return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags = []
-        for tw in self.tweets_list:
-            hashtags.append(", ".join([hashtag_item['text'] for hashtag_item in tw['entities']['hashtags']]))
-
-    def find_hashtags(self) -> list:
-        hashtags = [tw.get('entities', {}).get('hashtags', None)
-                    for tw in self.tweets_list]
-
+        # return list of all None
+        hashtags = [x.get('hashtags', None) for x in self.tweets_list]
         return hashtags
 
     def find_mentions(self)->list:
-        mentions = []
-        for tw in self.tweets_list:
-            mentions.append( ", ".join([mention['screen_name'] for mention in tw['entities']['user_mentions']]))
-
+        # retun list of all None
+        mentions = [x.get('mentions', None) for x in self.tweets_list]
         return mentions
-    
-    def find_lang(self)->list:
-        lang = [x['lang'] for x in self.tweets_list]
-        
-        return lang
+
 
     def find_location(self)->list:
-        location = []
-        for tweet in self.tweets_list:
-            location.append(tweet['user']['location'])
-            
+        location = [x.get('user', {}).get('location', None) for x in self.tweets_list]
         return location
-    
+        
+    def find_lang(self)->list:
+        lang = [x.get('retweeted_status', {}).get('lang', None) for x in self.tweets_list]
+        return lang    
+
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
         
@@ -161,33 +136,26 @@ class TweetDfExtractor:
         hashtags = self.find_hashtags()
         mentions = self.find_mentions()
         location = self.find_location()
+
         data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
-        
+
         if save:
             df.to_csv('processed_tweet_data.csv', index=False)
             print('File Successfully Saved.!!!')
-            
+        
         return df
 
-    
-                    
-def find_full_text(self)->list:
-    try:
-        retweeted_status = [x.get("retweeted_status", {}) for x in self.tweets_list]
-        text =[(x.get("extended_tweet", {})).get("full_text", None) for x in retweeted_status]
-        filtered = []
-        for x in text:
-            if x != None:
-                filtered.append(x)
-                text = ''.join(filtered)
-    except KeyError:
-        text = ''
-    return text
-
+                
 if __name__ == "__main__":
-    
-    _, tweet_list = read_json("covid19.json")
-    
+    # required column to be generated you should be creative and add more features
+    columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
+    'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
+    tweets_length, tweet_list = read_json("data/covid19.json")
+    print(tweets_length)
     tweet = TweetDfExtractor(tweet_list)
-    df = tweet.get_tweet_df()
+    tweet_df = tweet.get_tweet_df() 
+
+    # use all defined functions to generate a dataframe with the specified columns above
+
+    
