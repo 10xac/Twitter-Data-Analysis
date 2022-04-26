@@ -1,11 +1,4 @@
-# Import required libraries
 import pandas as pd
-# import sys
-# import os
-
-# sys.path.append(os.path.abspath(os.path.join('../')))
-# from extract_dataframe import read_json
-# from extract_dataframe import TweetDfExtractor
 
 
 class CleanTweets:
@@ -48,10 +41,11 @@ class CleanTweets:
     def convert_to_numbers(self) -> pd.DataFrame:
         """
         convert columns like polarity, subjectivity, retweet_count
-        favorite_count etc to numbers
+        favorite_count etc. to numbers
         """
         self.df['polarity'] = pd.to_numeric(self.df['polarity'], errors='coerce')
         self.df['retweet_count'] = pd.to_numeric(self.df['retweet_count'], errors='coerce')
+        self.df['subjectivity'] = pd.to_numeric(self.df['subjectivity'], errors='coerce')
         self.df['favorite_count'] = pd.to_numeric(self.df['favorite_count'], errors='coerce')
 
         return self.df

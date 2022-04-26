@@ -208,11 +208,6 @@ class TweetDfExtractor:
         mentions = self.find_mentions()
         location = self.find_location()
 
-        # Some debugging
-        ml = [text, polarity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity,
-              hashtags, mentions, location]
-        print([type(x) for x in ml])
-
         data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count,
                    screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
