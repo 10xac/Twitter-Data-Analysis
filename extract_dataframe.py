@@ -104,7 +104,7 @@ class TweetDfExtractor:
         try:
             location = [value['user']['location'] for value in self.tweets_list]
         except TypeError:
-            location = for value in self.tweets_list:
+            for value in self.tweets_list:
                 value['user']['location']=''
                 location.append(value['user']['location'])
         
