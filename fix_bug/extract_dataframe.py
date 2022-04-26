@@ -29,7 +29,7 @@ class TweetDfExtractor:
     ------
     dataframe
     """
-    def init(self, tweets_list):
+    def __init__(self, tweets_list):
         
         self.tweets_list = tweets_list
 
@@ -41,14 +41,13 @@ class TweetDfExtractor:
     def find_full_text(self)->list:
         text = []
         for tweet in self.tweets_list:
-            if 'retweeted_status' in tweet.keys() and 'extended_tweet' in tweet ['retweeted_status'].keys():
+            if 'retweeted_status' in tweet.keys() and 'extended_tweet' in tweet['retweeted_status'].keys():
                 text.append(tweet['retweeted_status']['extended_tweet']['full_text'])
-            else: 
-                text.append('Empty')
+            else: text.append('Empty')
 
-        return text
-
-        def find_sentiments(self, text:list)->list:
+        return text       
+    
+    def find_sentiments(self, text:list)->list:
         polarity, subjectivity = [], []
         for tweet in text:
             blob = TextBlob(tweet)
@@ -135,7 +134,7 @@ class TweetDfExtractor:
         
         return lang
 
-        def find_location(self)->list:
+    def find_location(self)->list:
         location = []
         for tweet in self.tweets_list:
             location.append(tweet['user']['location'])
@@ -170,6 +169,8 @@ class TweetDfExtractor:
             print('File Successfully Saved.!!!')
             
         return df
+
+    
                     
 def find_full_text(self)->list:
     try:
@@ -184,7 +185,7 @@ def find_full_text(self)->list:
         text = ''
     return text
 
-if name == "main":
+if __name__ == "__main__":
     
     _, tweet_list = read_json("data\Economic_Twitter_Data.json")
     
