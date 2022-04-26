@@ -10,7 +10,7 @@ def read_json(json_file: str) -> list:
     Args:
     -----
     json_file: str - path of a json file
-    
+
     Returns
     -------
     length of the json file and a list of json
@@ -27,7 +27,7 @@ def read_json(json_file: str) -> list:
 class TweetDfExtractor:
     """
     this function will parse tweets json into a pandas dataframe
-    
+
     Return
     ------
     dataframe
@@ -143,7 +143,7 @@ if __name__ == "__main__":
                'favorite_count', 'retweet_count',
                'original_author', 'screen_count', 'followers_count', 'friends_count', 'possibly_sensitive', 'hashtags',
                'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("data/Economic_Twitter_Data.json")
+    _, tweet_list = read_json("./data/Economic_Twitter_Data.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df()
 
