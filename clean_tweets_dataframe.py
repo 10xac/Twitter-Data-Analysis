@@ -22,6 +22,7 @@ class Clean_Tweets:
         """
         
         ---
+        df = df.drop_duplicates(subset = 'id',keep=False, inplace=True)
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
@@ -31,28 +32,33 @@ class Clean_Tweets:
         ----
         
         ----
+        df['created_at'] = pd.to_datetime(df['created_at'],utc=True).dt.strftime('%m/%d/%Y')
         
-        df = df[df['created_at'] >= '2020-12-31' ]
         
         return df
     
-    def convert_to_numbers(self, df:pd.DataFrame)->pd.DataFrame:
+    def convert_to_numbers(self,column, df:pd.DataFrame)->pd.DataFrame:
         """
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
-        df['polarity'] = pd.----
-        
+        df[column] = pd.to_numeric(df[column])
         ----
         ----
         
         return df
     
     def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
+        eng_text=[]
         """
         remove non english tweets from lang
         """
-        
-        df = ----
-        
+        text = df['lang']  
+        for sen in text:
+            for w in nltk.wordpunct_tokenize(sen):
+                if w.lower() in words or not w.isalpha():
+                    pass
+            eng_text.append(sen)
+            
+        df['lang'] = eng_text
         return df
