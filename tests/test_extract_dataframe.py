@@ -4,7 +4,6 @@ import sys, os
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
 
-
 sys.path.append(os.path.abspath(os.path.join('../..')))
 
 _, tweet_list = read_json("./data/Economic_Twitter_Data.json")
