@@ -166,9 +166,7 @@ class TweetDfExtractor:
         # save = True
         """required column to be generated you should be creative and add more features"""
         columns = ['created_at', 'source', 'original_text', 'cleaned_text', 'polarity', 'polarity_clean',
-                   'subjectivity', 'subjectivity_clean', 'lang',
-                   'favorite_count',
-                   'retweet_count',
+                   'subjectivity', 'subjectivity_clean', 'lang', 'favorite_count', 'retweet_count',
                    'original_author', 'followers_count', 'friends_count', 'possibly_sensitive', 'hashtags',
                    'user_mentions', 'place']
 
@@ -179,7 +177,7 @@ class TweetDfExtractor:
         text = self.find_full_text()
         text_new = self.text_cleaner(text)
         polarity, subjectivity = self.find_sentiments(text)
-        polarity_clean, subjectivity_clean = self.find_sentiments(text_new)
+        # polarity_clean, subjectivity_clean = self.find_sentiments(text_new)
         lang = self.find_lang()
         fav_count = self.find_favourite_count()
         retweet_count = self.find_retweet_count()
@@ -192,7 +190,8 @@ class TweetDfExtractor:
         location = self.find_location()
 
         data_dic = {'created_at': created_at, 'source': source, 'original_text': text, 'cleaned_text': text_new,
-                    'polarity': polarity, 'polarity_clean': polarity_clean, 'subjectivity_clean': subjectivity_clean,
+                    'polarity': polarity,
+                    # 'polarity_clean': polarity_clean, 'subjectivity_clean': subjectivity_clean,
                     'subjectivity': subjectivity, 'lang': lang, 'favorite_count': fav_count,
                     'retweet_count': retweet_count, 'original_author': screen_name, 'followers_count': follower_count,
                     'friends_count': friends_count, 'possibly_sensitive': sensitivity, 'hashtags': hashtags,
