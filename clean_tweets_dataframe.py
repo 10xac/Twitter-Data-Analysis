@@ -1,5 +1,11 @@
 # Import required libraries
 import pandas as pd
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join('../')))
+from extract_dataframe import read_json
+from extract_dataframe import TweetDfExtractor
 
 
 class CleanTweets:

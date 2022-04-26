@@ -1,8 +1,9 @@
 import json
 import pandas as pd
+from textblob import TextBlob
 
 
-def read_json(json_file: str) -> list:
+def read_json(json_file: str) -> tuple:
     """
     json file reader to open and read json files into a list
     Args:
@@ -47,40 +48,68 @@ class TweetDfExtractor:
     def find_full_text(self) -> list:
         """
         Returns the tweet body including retweet status
-        Returns
-        -------
-        list
         """
         text = []
-        for tweet in self.tweets_list:
-            if 'retweeted_status' in tweet.keys() and 'extended_tweet' in tweet['retweeted_status'].keys():
-                text.append(tweet['retweeted_status']['extended_tweet']['full_text'])
+        for x in self.tweets_list:
+            if 'retweeted_status' in x.keys() and 'extended_tweet' in x['retweeted_status'].keys():
+                text.append(x['retweeted_status']['extended_tweet']['full_text'])
             else:
-                tweet.apppend('Empty')
+                x.apppend('Empty')
 
         return text
 
-    def find_sentiments(self, text) -> list:
+    def find_sentiments(self, text) -> tuple:
+        """
+        returns lists of  polarity and subjectivity of the texts
+        """
+        polarity, subjectivity = [], []
+        for x in text:
+            blob = TextBlob(x)
+            sentiment = blob.sentiment
+            polarity.append(sentiment.polarity)
+            subjectivity.append(sentiment.subjectivity)
 
-        return polarity, self.subjectivity
+        return polarity, subjectivity
 
     def find_created_time(self) -> list:
+        """
+        Returns a list of tweet created time
+        """
+        created_at = [i['created_at'] for i in self.tweets_list]
 
         return created_at
 
     def find_source(self) -> list:
-        source =
+        """
+        Returns a list of application the tweet was sent on
+        """
+        source = [x['source'] for x in self.tweets_list]
 
         return source
 
     def find_screen_name(self) -> list:
-        screen_name =
+        """
+        Returns a list of authors usernames
+        """
+        screen_name = [x['user']['screen_name'] for x in self.tweets_list]
+
+        return screen_name
 
     def find_followers_count(self) -> list:
-        followers_count =
+        """
+        Returns a list of Author's followers count
+        """
+        followers_count = [x['user']['followers_count'] for x in self.tweets_list]
+
+        return followers_count
 
     def find_friends_count(self) -> list:
-        friends_count =
+        """
+        Returns a list of users' friends count
+        """
+        friends_count = [x['user']['friends_count'] for x in self.tweets_list]
+
+        return friends_count
 
     def is_sensitive(self) -> list:
         try:
@@ -91,19 +120,54 @@ class TweetDfExtractor:
         return is_sensitive
 
     def find_favourite_count(self) -> list:
+        """
+        Returns number of favorites users' have
+        """
+        fav_count = []
+        for x in self.tweets_list:
+            if 'retweeted_status' in x.keys():
+                fav_count.append(x['retweeted_status']['favourites_count'])
+            else: fav_count.append(0)
+
+        return fav_count
 
     def find_retweet_count(self) -> list:
-        retweet_count =
+        """
+        Returns a list of tweets' retweet count
+        """
+        retweet_count = []
+        for x in self.tweets_list:
+            if 'retweeted_status' in tweet.keys():
+                retweet_count.append(tweet['retweeted_status']['retweet_count'])
+            else:
+                retweet_count.append(0)
+
+        return retweet_count
 
     def find_hashtags(self) -> list:
-        hashtags =
+        """
+        Returns a list of hashtags from the dataset
+        """
+        hashtags = []
+        for t in self.tweets_list:
+            hashtags.append(", ".join([hashtag_item['text'] for hashtag_item in t['entities']['hashtags']]))
+
+        return hashtags
 
     def find_mentions(self) -> list:
-        mentions =
+        """
+        Returns a list of mentions(if they exist)
+        """
+        mentions = []
+        for t in self.tweets_list:
+            mentions.append(", ".join([mention['screen_name'] for mention in t['entities']['user_mentions']]))
+
+        return mentions
 
     def find_location(self) -> list:
         try:
             location = self.tweets_list['user']['location']
+            # location = [x[self.tweets_list['user']['location']]for x in self.tweets_list]
         except TypeError:
             location = ''
 
@@ -144,7 +208,7 @@ if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text', 'clean_text', 'sentiment', 'polarity', 'subjectivity', 'lang', 'favorite_count', 'retweet_count',
                'original_author', 'screen_count', 'followers_count', 'friends_count', 'possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("../covid19.json")
+    _, tweet_list = read_json("data/Economic_Twitter_Data.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df()
 
