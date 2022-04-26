@@ -1,3 +1,5 @@
+from cgitb import text
+from imp import source_from_cache
 import json
 import pandas as pd
 from textblob import TextBlob
@@ -35,10 +37,10 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count 
+        self.statuses_count = statuses_count  
         
     def find_full_text(self)->list:
-        text = 
+        self.text = text
        
     
     def find_sentiments(self, text)->list:
@@ -50,7 +52,7 @@ class TweetDfExtractor:
         return created_at
 
     def find_source(self)->list:
-        source = 
+        self.source =  source_from_cache
 
         return source
 
