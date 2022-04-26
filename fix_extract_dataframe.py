@@ -19,7 +19,7 @@ def read_json(json_file: str)->list:
         tweets_data.append(json.loads(tweets))
     
     
-    return len(tweets_data), tweets_data
+    return tweets_data
 
 class TweetDfExtractor:
     """
