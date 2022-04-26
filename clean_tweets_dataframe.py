@@ -15,11 +15,11 @@ class Clean_Tweets:
         remove rows that has column names. This error originated from
         the data collection stage.  
         """
-        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
-        df.drop(unwanted_rows , inplace=True)
-        df = df[df['polarity'] != 'polarity']
-        
-        return df
+        unwanted_rows = self.df[self.df['retweet_count'] == 'retweet_count'].index
+        self.df.drop(unwanted_rows, inplace=True)
+        self.df = self.df[self.df['polarity'] != 'polarity']
+
+        return self.df
     def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
         """
         drop duplicate rows
