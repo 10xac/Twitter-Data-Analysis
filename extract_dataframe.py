@@ -1,7 +1,8 @@
 import json
 import pandas as pd
-# from textblob import TextBlob
-#import zipfile
+from textblob import TextBlob
+#to read the zipped data set we need to import this module
+from zipfile import ZipFile
 
 
 def read_json(json_file: str) -> list:
@@ -17,7 +18,10 @@ def read_json(json_file: str) -> list:
     """
 
     tweets_data = []
-
+    # openning the zip in READ mode
+    with ZipFile(json_file,'r') as zip_file:
+    # extracting the zip
+        zip_file.extractall("data/")
     for tweets in open(json_file, 'r'):
         tweets_data.append(json.loads(tweets))
 
@@ -40,6 +44,7 @@ class TweetDfExtractor:
     def find_statuses_count(self) -> list:
         statuses_count = [tweet['user']['statuses_count']
                           for tweet in self.tweets_list]
+        return statuses_count
 
     def find_full_text(self) -> list:
         pass
@@ -143,7 +148,7 @@ if __name__ == "__main__":
                'favorite_count', 'retweet_count',
                'original_author', 'screen_count', 'followers_count', 'friends_count', 'possibly_sensitive', 'hashtags',
                'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("./data/Economic_Twitter_Data.json")
+    _, tweet_list = read_json("./data/Economic_Twitter_Data.zip")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df()
 
