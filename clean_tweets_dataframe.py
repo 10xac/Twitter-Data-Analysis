@@ -1,3 +1,4 @@
+import pandas as pd
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
@@ -20,17 +21,14 @@ class Clean_Tweets:
         """
         drop duplicate rows
         """
-        
-        ---
+        df = df.drop_duplicates()
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        ## me done this shit  : 
-        df = df.to_datetime()
-        data  = df
+        df['created_at'] = pd.to_datetime(df['created_at'], format='%Y%m%d')
         
         df = df[df['created_at'] >= '2020-12-31' ]
         
@@ -41,10 +39,19 @@ class Clean_Tweets:
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
-        df['polarity'] = pd.----
+        df['polarity'] = pd.to_numeric(df['polarity'] , downcast = "float")
+        df['subjectivity'] = pd.to_numeric(df['subjectivity'] , downcast = "float")
+        df['retweet_count'] = pd.to_numeric(df['retweet_count'] , downcast = "float")
+        df['favorite_count'] = pd.to_numeric(df['favorite_count'] , downcast = "float")
+        df['retweet_count'] = pd.to_numeric(df['retweet_count'] , downcast = "float")
+        df['original_author'] = pd.to_numeric(df['original_author'] , downcast = "float")
+        df['followers_count'] = pd.to_numeric(df['followers_count'] , downcast = "float")
+        df['friends_count'] = pd.to_numeric(df['friends_count'] , downcast = "float")
+        df['possibly_sensitive'] = pd.to_numeric(df['possibly_sensitive'] , downcast = "float")
+        df['hashtags'] = pd.to_numeric(df['hashtags'] , downcast = "float")
+        df['user_mentions'] = pd.to_numeric(df['user_mentions'] , downcast = "float")
+        df['place'] = pd.to_numeric(df['place'] , downcast = "float")
         
-        ----
-        ----
         
         return df
     
@@ -53,6 +60,6 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
         
-        df = ----
+        df = df[df.lang.map(lambda x: x.isascii())]
         
         return df
