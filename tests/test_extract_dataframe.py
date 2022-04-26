@@ -3,7 +3,9 @@ import pandas as pd
 import sys, os
 
 # Setting the path to the Json file (Covid10.Json)
-sys.path.append(os.path.abspath(os.path.join('../..')))
+sys.path.append(os.path.abspath(os.path.join('..')))
+
+
 
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
