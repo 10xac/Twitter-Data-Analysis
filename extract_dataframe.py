@@ -3,7 +3,7 @@ import pandas as pd
 from textblob import TextBlob
 
 
-def read_json(json_file: str) -> tuple:
+def read_json(json_file: str) -> list:
     """
     json file reader to open and read json files into a list
     Args:
@@ -49,14 +49,19 @@ class TweetDfExtractor:
         """
         Returns the tweet body including retweet status
         """
-        text = []
-        for x in self.tweets_list:
-            if 'retweeted_status' in x.keys() and 'extended_tweet' in x['retweeted_status'].keys():
-                text.append(x['retweeted_status']['extended_tweet']['full_text'])
-            else:
-                x.apppend('Empty')
+        try:
+            retweeted_status = [x.get("retweeted_status", {}) for x in self.tweets_list]
+            text =[(x.get("extended_tweet", {})).get("full_text", None) for x in retweeted_status]
+            filtered = []
+            for x in text:
+                if x != None:
+                    filtered.append(x)
+                    text = ''.join(filtered)
+        except KeyError:
+            text = ''
 
         return text
+
 
     def find_sentiments(self, text) -> tuple:
         """
@@ -173,11 +178,19 @@ class TweetDfExtractor:
 
         return location
 
+    def find_lang(self) -> list:
+        """
+        Returns a list of tweets' language
+        """
+        language = self.tweets_list['user']['lang']
+        return language
+
     def get_tweet_df(self, save=False) -> pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
 
-        columns = ['created_at', 'source', 'original_text', 'polarity', 'subjectivity', 'lang', 'favorite_count', 'retweet_count',
-                   'original_author', 'followers_count', 'friends_count', 'possibly_sensitive', 'hashtags', 'user_mentions', 'place']
+        columns = ['created_at', 'source', 'original_text', 'polarity', 'subjectivity', 'lang', 'favorite_count',
+                   'retweet_count', 'original_author', 'followers_count', 'friends_count', 'possibly_sensitive',
+                   'hashtags', 'user_mentions', 'place']
 
         created_at = self.find_created_time()
         source = self.find_source()
