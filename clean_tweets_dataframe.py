@@ -1,62 +1,64 @@
 import pandas as pd
-from extract_dataframe import read_json,TweetDfExtractor
-class Clean_Tweets:
+
+class CleanTweets:
     """
-    The PEP8 Standard AMAZING!!!
+    This class is responsible for cleaning the twitter dataframe
+    Returns:
+    --------
+    A dataframe
     """
     def __init__(self, df:pd.DataFrame):
         self.df = df
         print('Automation in Action...!!!')
         
-    def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:
+    def drop_unwanted_column(self)->pd.DataFrame:
         """
         remove rows that has column names. This error originated from
         the data collection stage.  
         """
-        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
-        df.drop(unwanted_rows , inplace=True)
-        # df = df[df['polarity'] != 'polarity']
+        unwanted_rows = self.df[self.df['retweet_count'] == 'retweet_count' ].index
+        self.df.drop(unwanted_rows , inplace=True)
+        self.df = self.df[self.df['polarity'] != 'polarity']
         
-        return df
+        return self.df
     def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
         """
         drop duplicate rows
         """
         
-        df["original_text"]=df["original_text"].astype(str)
-        df.drop_duplicates(subset=["original_text"] , inplace=True)
-
+        self.df = self.df.drop_duplicates().drop_duplicates(subset='original_text')
+        
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        df['created_at']=pd.to_datetime(df['created_at'], format='%a %b %d %H:%M:%S %z %Y')
+        self.df['created_at'] = pd.to_datetime(self.df['created_at'], errors='coerce')
         
-        return df
+        self.df = self.df[self.df['created_at'] >= '2020-12-31' ]
+        
+        return self.df
     
-    def convert_to_numbers(self, df:pd.DataFrame)->pd.DataFrame:
+    def convert_to_numbers(self)->pd.DataFrame:
         """
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
-        df['polarity'] = pd.to_numeric(df['polarity'],errors='coerce')
-        df['subjectivity'] = pd.to_numeric(df['subjectivity'],errors='coerce')
-        df['retweet_count'] = pd.to_numeric(df['retweet_count'],errors='coerce')
-        df['favorite_count'] = pd.to_numeric(df['favorite_count'],errors='coerce')
+        self.df['polarity'] = pd.to_numeric(self.df['polarity'], errors='coerce')
+        self.df['retweet_count'] = pd.to_numeric(self.df['retweet_count'], errors='coerce')
+        self.df['favorite_count'] = pd.to_numeric(self.df['favorite_count'], errors='coerce')
         
-        df['followers_count'] = pd.to_numeric(df['followers_count'],errors='coerce')
-        
-        df['friends_count'] = pd.to_numeric(df['friends_count'],errors='coerce')
-        
-        return df
+        return self.df
     
-    def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
+    def remove_non_english_tweets(self)->pd.DataFrame:
         """
         remove non english tweets from lang
         """
-        unwanted_rows=df[df['lang'] != "en"].index
-
-        df.drop(unwanted_rows ,inplace=True)
         
-        return df
+        self.df = self.df.query("lang == 'en' ")
+        
+        return self.df
+
+if __name__ == "__main__":
+    tweet_df = pd.read_csv("C:/Users/Success/visual_try/data/Economic_Twitter_Data.csv")
+    cleaner = CleanTweets(tweet_df)
