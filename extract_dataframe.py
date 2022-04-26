@@ -172,10 +172,7 @@ class TweetDfExtractor:
                    'original_author', 'followers_count', 'friends_count', 'possibly_sensitive', 'hashtags',
                    'user_mentions', 'place']
 
-        # columns = ['created_at', 'source', 'original_text', 'clean_text', 'sentiment', 'polarity', 'subjectivity',
-        #            'lang', 'favorite_count', 'retweet_count',
-        #            'original_author', 'screen_count', 'followers_count', 'friends_count', 'possibly_sensitive',
-        #            'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
+        # columns to add = ['sentiment','screen_count','place_coord_boundaries']
 
         created_at = self.find_created_time()
         source = self.find_source()
