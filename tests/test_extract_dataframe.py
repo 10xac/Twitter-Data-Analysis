@@ -1,13 +1,14 @@
 import unittest
 import pandas as pd
 import sys, os
+#import extract_dataframe
  
 sys.path.append(os.path.abspath(os.path.join('../..')))
 
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
 
-_, tweet_list = read_json("data/covid19.json")
+_, tweet_list = read_json("../data/Economic_Twitter_Data.json")
 
 columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
@@ -16,7 +17,6 @@ columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','po
 class TestTweetDfExtractor(unittest.TestCase):
     """
 		A class for unit-testing function in the fix_clean_tweets_dataframe.py file
-
 		Args:
         -----
 			unittest.TestCase this allows the new class to inherit
@@ -85,5 +85,6 @@ class TestTweetDfExtractor(unittest.TestCase):
 
 if __name__ == '__main__':
 	unittest.main()
+
 
     
