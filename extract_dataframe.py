@@ -35,10 +35,10 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count 
+        statuses_count = [value['user']['statuses_count']for value in data[1]]
         
     def find_full_text(self)->list:
-        text = 
+        text = [value['text']for value in data[1]]
        
     
     def find_sentiments(self, text)->list:
@@ -46,22 +46,26 @@ class TweetDfExtractor:
         return polarity, self.subjectivity
 
     def find_created_time(self)->list:
+        created_at = [value['created_at']for value in data[1]]
        
         return created_at
 
     def find_source(self)->list:
-        source = 
+        source = [value['source'] for value in data[1]]
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = [value['user']['screen_name'] for value in data[1]]
+        return find_screen_name
 
     def find_followers_count(self)->list:
-        followers_count = 
+        followers_count = [value['user']['followers_count'] for value in data[1]]
+        return followers_count
 
     def find_friends_count(self)->list:
-        friends_count = 
+        friends_count = [value['user']['friends_count'] for value in data[1]]
+        return friends_count
 
     def is_sensitive(self)->list:
         try:
@@ -72,17 +76,20 @@ class TweetDfExtractor:
         return is_sensitive
 
     def find_favourite_count(self)->list:
-        
+        favourite_count = [value['user']['favourites_count'] for value in data[1]]
+        return favourite_count
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+        retweet_count = [value['retweet_count'] for value in data[1]]
+        return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags =
+        hashtags = [value['entities']['hashtags'] for value in data[1]]
+        return hashtags
 
     def find_mentions(self)->list:
-        mentions = 
-
+        mentions = [value['entities']['user_mentions'] for value in data[1]]
+        return mentions
 
     def find_location(self)->list:
         try:
@@ -90,10 +97,7 @@ class TweetDfExtractor:
         except TypeError:
             location = ''
         
-        return location
-
-    
-        
+        return location    
         
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
@@ -134,5 +138,6 @@ if __name__ == "__main__":
     tweet_df = tweet.get_tweet_df() 
 
     # use all defined functions to generate a dataframe with the specified columns above
+    
 
     
