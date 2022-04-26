@@ -1,6 +1,5 @@
 import json
 import pandas as pd
-from textblob import TextBlob
 
 
 def read_json(json_file: str) -> list:
@@ -35,12 +34,31 @@ class TweetDfExtractor:
 
         self.tweets_list = tweets_list
 
-    # an example function
     def find_statuses_count(self) -> list:
-        statuses_count
+        """
+        finds the number of tweets
+        Returns
+        -------
+        list
+        """
+        statuses_count = [i['user']['status_count'] for i in self.tweets_list]
+        return statuses_count
 
     def find_full_text(self) -> list:
-        text =
+        """
+        Returns the tweet body including retweet status
+        Returns
+        -------
+        list
+        """
+        text = []
+        for tweet in self.tweets_list:
+            if 'retweeted_status' in tweet.keys() and 'extended_tweet' in tweet['retweeted_status'].keys():
+                text.append(tweet['retweeted_status']['extended_tweet']['full_text'])
+            else:
+                tweet.apppend('Empty')
+
+        return text
 
     def find_sentiments(self, text) -> list:
 
