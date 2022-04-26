@@ -36,9 +36,8 @@ class TestTweetDfExtractor(unittest.TestCase):
     def test_find_full_text(self):
         text = ['RT @nikitheblogger: Irre: Annalena Baerbock sagt, es bricht ihr das Herz, '
                 'dass man nicht bedingungslos schwere Waffen liefert.\n'
-                'Mir bricht e…',
-                'RT @sagt_mit: Merkel schaffte es in 1 Jahr 1 Million "Flüchtlinge" '
-                'durchzufüttern, jedoch nicht nach 16 Jahren 1 Million Rentner aus der Ar…',
+                'Mir bricht e…', 'RT @sagt_mit: Merkel schaffte es in 1 Jahr 1 Million "Flüchtlinge" '
+                                 'durchzufüttern, jedoch nicht nach 16 Jahren 1 Million Rentner aus der Ar…',
                 'RT @Kryptonoun: @WRi007 Pharma in Lebensmitteln, Trinkwasser, in der Luft '
                 'oder in der Zahnpasta irgendwo muss ein Beruhigungsmittel bzw. Be…',
                 'RT @WRi007: Die #Deutschen sind ein braves Volk!. Mit #Spritpreisen von 2 '
