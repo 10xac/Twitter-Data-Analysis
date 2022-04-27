@@ -31,7 +31,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         # tweet_df = self.df.get_tweet_df()
 
     def test_find_statuses_count(self):
-        self.assertEqual(self.df.find_statuses_count(), [40, 40, 40, 40, 40])  # [204051, 3462, 6727, 45477, 277957])
+        self.assertEqual(self.df.find_statuses_count(), [40, 40, 40, 40, 40])
 
     def test_find_full_text(self):
         text = ['RT @nikitheblogger: Irre: Annalena Baerbock sagt, es bricht ihr das Herz, '
