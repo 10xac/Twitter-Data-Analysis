@@ -18,25 +18,25 @@ class Clean_Tweets:
         
         return self.df
     
-    def drop_duplicate(self)->pd.DataFrame:
+    def drop_duplicate(self,subs:list)->pd.DataFrame:
         """
         drop duplicate rows
         """
         # Drop the posts that have the same text
-        self.df = self.df.drop_duplicates(subset='text')
+        self.df = self.df.drop_duplicates(subset=subs)
         
         return self.df
     
-    def convert_to_datetime(self)->pd.DataFrame:
+    def convert_to_datetime(self,datcol:list)->pd.DataFrame:
         """
         convert column to datetime
         """
         # Make a copy of the data frame
         self.df = self.df.copy()
         # Convert the corresponding column
-        self.df.loc[:,'created_at'] = pd.to_datetime(self.df.loc[:,'created_at'],errors='coerce')
+        self.df.loc[:,datcol] = pd.to_datetime(self.df.loc[:,datcol],errors='coerce')
         
-        self.df = self.df[self.df['created_at'] >= '2020-12-31' ]
+        self.df = self.df[self.df[datcol] >= '2020-12-31' ]
         
         return self.df
     
