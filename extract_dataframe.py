@@ -1,6 +1,8 @@
 import json
 import pandas as pd
 from textblob import TextBlob
+from textblob.en import polarity
+
 
 def read_json(json_file: str)->list:
     """
@@ -34,34 +36,34 @@ class TweetDfExtractor:
         self.tweets_list = tweets_list
 
     # an example function
-    def find_statuses_count(self)->list:
+    def find_statuses_count(self, statuses_count=None)->list:
         statuses_count 
         
     def find_full_text(self)->list:
-        text = 
+        text = ''
        
     
     def find_sentiments(self, text)->list:
         
         return polarity, self.subjectivity
 
-    def find_created_time(self)->list:
+    def find_created_time(self, created_at=None)->list:
        
         return created_at
 
+    @property
     def find_source(self)->list:
-        source = 
+        source = ''
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = ''
 
     def find_followers_count(self)->list:
-        followers_count = 
 
-    def find_friends_count(self)->list:
-        friends_count = 
+     def find_friends_count(self)->list:
+        friends_count = ''
 
     def is_sensitive(self)->list:
         try:
@@ -74,14 +76,15 @@ class TweetDfExtractor:
     def find_favourite_count(self)->list:
         
     
-    def find_retweet_count(self)->list:
-        retweet_count = 
+     def find_retweet_count(self)->list:
+        retweet_count = ''
 
     def find_hashtags(self)->list:
-        hashtags =
+        hashtags = ''
 
     def find_mentions(self)->list:
-        mentions = 
+        mentions = ''
+
 
 
     def find_location(self)->list:
@@ -102,7 +105,7 @@ class TweetDfExtractor:
             'original_author', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place']
         
         created_at = self.find_created_time()
-        source = self.find_source()
+        source = self.find_source
         text = self.find_full_text()
         polarity, subjectivity = self.find_sentiments(text)
         lang = self.find_lang()
@@ -117,7 +120,7 @@ class TweetDfExtractor:
         location = self.find_location()
         data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
-
+        return df
         if save:
             df.to_csv('processed_tweet_data.csv', index=False)
             print('File Successfully Saved.!!!')

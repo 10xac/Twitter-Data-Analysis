@@ -1,7 +1,9 @@
 import unittest
 import pandas as pd
 import sys, os
- 
+
+import self as self
+
 sys.path.append(os.path.abspath(os.path.join('../..')))
 
 from extract_dataframe import read_json
@@ -51,12 +53,16 @@ class TestTweetDfExtractor(unittest.TestCase):
         '<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>', '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>',
          '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>']
 
-        self.assertEqual(self.df.find_source(), source)
+        self.assertEqual(self.df.find_source, source)
 
     def test_find_screen_name(self):
-        name = ['ketuesriche', 'Grid1949', 'LeeTomlinson8', 'RIPNY08', 'pash22']
-        self.assertEqual(self.df.find_screen_name(), name)
-
+        # name = ['ketuesriche', 'Grid1949', 'LeeTomlinson8', 'RIPNY08', 'pash22']
+        # self.assertEqual(self.df.find_screen_name(), name)
+          screen_name =['McMc74078966',
+          'McMc74078966',
+                     'McMc74078966',
+          'McMc74078966','McMc74078966']
+          self.assertEqual(self.df.find_screen_name(),screen_name)
     def test_find_followers_count(self):
         f_count = [551, 66, 1195, 2666, 28250]
         self.assertEqual(self.df.find_followers_count(), f_count)
