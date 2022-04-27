@@ -26,17 +26,10 @@ class Clean_Tweets:
         remove rows that has column names. This error originated from
         the data collection stage.  
         """
-        columns = ['created_at', 'source', 'original_text', 'clean_text', 'sentiment', 'polarity', 'subjectivity',
-                   'lang', 'favorite_count', 'retweet_count',
-                   'original_author', 'screen_count', 'followers_count', 'friends_count', 'possibly_sensitive',
-                   'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-        unwanted_rows = []
-        for columnName in columns:
-            unwanted_rows += df[df[columnName] == columnName].index
-
-        df.drop(unwanted_rows, inplace=True)
-        df.reset_index(drop=True, inplace=True)
-
+        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
+        df.drop(unwanted_rows , inplace=True)
+        df = df[df['polarity'] != 'polarity']
+        
         return df
 
 
@@ -47,8 +40,8 @@ class Clean_Tweets:
         """
 
 
-        df.drop_duplicates(inplace=True)
-        df.reset_index(drop=True, inplace=True)
+        df.drop_duplicates(subset= "created_at" , keep=False, inplace=True)
+        #df.reset_index(drop=True, inplace=True)
 
         return df
         
@@ -61,9 +54,11 @@ class Clean_Tweets:
         convert column to datetime
         """
 
-        df['created_at'] = pd.to_datetime(df['created_at'])
+        self.df['created_at'] = pd.to_datetime(df['created_at'], errors='coerce')
 
-        return df
+        self.df = df[df['created_at'] >= '2020-12-31']
+
+        return self.df
     
     def convert_to_numbers(self, df:pd.DataFrame)->pd.DataFrame:
         #pass
