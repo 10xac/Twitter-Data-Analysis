@@ -24,7 +24,7 @@ def read_json(json_tweets_file: str) -> list:
 
     file_use.close()
 
-    return len(tweets_list),tweets_list
+    return len(tweets_list), tweets_list
 
 
 class TweetDfExtractor:
@@ -43,6 +43,7 @@ class TweetDfExtractor:
     # # an example function
     def find_statuses_count(self) -> list:
         statuses_count = [x['user']['statuses_count'] for x in self.tweets_list]
+        return statuses_count
 
     def find_full_text(self) -> list:
         text = []
@@ -74,13 +75,21 @@ class TweetDfExtractor:
 
         polarity = []
         subjectivity = []
+        sentiment_class = []
         for tweet in text:
             blob = TextBlob(tweet)
             sentiment = blob.sentiment
             polarity.append(sentiment.polarity)
             subjectivity.append(sentiment.subjectivity)
 
-        return polarity, subjectivity
+            if sentiment.polarity > 0:
+                sentiment_class.append('Positive')
+            elif sentiment.polarity < 0:
+                sentiment_class.append('Negative')
+            else:
+                sentiment_class.append('Neutral')
+
+        return polarity, subjectivity, sentiment_class
 
     def find_created_time(self) -> list:
         created_at = [x['created_at'] for x in self.tweets_list]
@@ -182,7 +191,8 @@ class TweetDfExtractor:
         source = self.find_source()
         text = self.find_full_text()
         text_new = self.text_cleaner(text)
-        polarity, subjectivity = self.find_sentiments(text)
+        polarity, subjectivity, _ = self.find_sentiments(text)
+        _, _, sentiment = self.find_sentiments(text)
         lang = self.find_lang()
         fav_count = self.find_favourite_count()
         retweet_count = self.find_retweet_count()
@@ -196,10 +206,12 @@ class TweetDfExtractor:
         coordinates = self.get_coordinates()
 
         data_dic = {'created_at': created_at, 'source': source, 'original_text': text, 'cleaned_text': text_new,
-                    'polarity': polarity, 'subjectivity': subjectivity, 'lang': lang, 'favorite_count': fav_count,
-                    'retweet_count': retweet_count, 'original_author': screen_name, 'followers_count': follower_count,
-                    'friends_count': friends_count, 'possibly_sensitive': sensitivity, 'hashtags': hashtags,
-                    'user_mentions': mentions, 'place': location, 'place_coord_boundaries': coordinates}
+                    'polarity': polarity, 'subjectivity': subjectivity, 'sentiment': sentiment, 'lang': lang,
+                    'favorite_count': fav_count, 'retweet_count': retweet_count, 'original_author': screen_name,
+                    'followers_count': follower_count, 'friends_count': friends_count,
+                    'possibly_sensitive': sensitivity,
+                    'hashtags': hashtags, 'user_mentions': mentions, 'place': location,
+                    'place_coord_boundaries': coordinates}
         df = pd.DataFrame(data=data_dic)
 
         if save:
@@ -210,7 +222,7 @@ class TweetDfExtractor:
 
 
 if __name__ == "__main__":
-    _,tweet_list = read_json("data/Economic_Twitter_Data.json")
+    _, tweet_list = read_json("data/Economic_Twitter_Data.json")
 
     tweet = TweetDfExtractor(tweet_list)
     df = tweet.get_tweet_df()
