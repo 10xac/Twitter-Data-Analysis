@@ -16,15 +16,15 @@ def read_json(json_tweets_file: str) -> list:
     A list of all tweets from a json file(input)
     """
 
-    tweets_lst = []
+    tweets_list = []
     file_use = open(json_tweets_file, 'r')
 
     for tweets in file_use:
-        tweets_lst.append(json.loads(tweets))
+        tweets_list.append(json.loads(tweets))
 
     file_use.close()
 
-    return tweets_lst
+    return len(tweets_list),tweets_list
 
 
 class TweetDfExtractor:
@@ -167,7 +167,7 @@ class TweetDfExtractor:
         return coordinates
 
     def get_tweet_df(self, save=False) -> pd.DataFrame:
-        # save = True
+        save = True
         """required column to be generated you should be creative and add more features"""
         columns = ['created_at', 'source', 'original_text', 'cleaned_text', 'polarity', 'polarity_clean',
                    'subjectivity', 'subjectivity_clean', 'lang',
@@ -210,7 +210,7 @@ class TweetDfExtractor:
 
 
 if __name__ == "__main__":
-    tweet_list = read_json("data/Economic_Twitter_Data.json")
+    _,tweet_list = read_json("data/Economic_Twitter_Data.json")
 
     tweet = TweetDfExtractor(tweet_list)
     df = tweet.get_tweet_df()
