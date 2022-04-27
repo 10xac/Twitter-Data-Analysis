@@ -20,7 +20,7 @@ class Clean_Tweets:
         df.reset_index(drop=True, inplace=True)
 
         return df
-        
+
     def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:
         """
         remove rows that has column names. This error originated from
@@ -51,9 +51,9 @@ class Clean_Tweets:
         df.reset_index(drop=True, inplace=True)
 
         return df
-        
 
-        
+
+
 
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         #pass
@@ -64,7 +64,7 @@ class Clean_Tweets:
         df['created_at'] = pd.to_datetime(df['created_at'])
 
         return df
-    
+
     def convert_to_numbers(self, df:pd.DataFrame)->pd.DataFrame:
         #pass
         """
@@ -78,10 +78,10 @@ class Clean_Tweets:
 
         return df
 
-        
 
 
-    
+
+
     def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
         """
         remove non english tweets from lang
@@ -93,3 +93,4 @@ class Clean_Tweets:
         df.reset_index(drop=True, inplace=True)
 
         return df
+
