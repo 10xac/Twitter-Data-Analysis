@@ -58,17 +58,6 @@ class TweetDfExtractor:
 
         return full_text
 
-    #def find_sentiment(self, polarity, subjectivity) -> list:
-        #sentiment = []
-       # for i in range(len(polarity)):
-          #  if polarity[i] > 0:
-              #  sentiment.append(1)
-            #elif polarity[i] < 0:
-                #sentiment.append(0)
-           # else:
-                #sentiment.append(-1)
-
-        #return sentiment
 
     def find_sentiments(self, text) -> list:
         # pass
@@ -204,7 +193,7 @@ class TweetDfExtractor:
         text = self.find_full_text()
         polarity= self.find_sentiments(text)
         subjectivity = self.find_sentiments(text)
-        #sentiment = self.find_sentiment(polarity, subjectivity)
+
         lang = self.find_lang()
         fav_count = self.find_favourite_count()
         retweet_count = self.find_retweet_count()
