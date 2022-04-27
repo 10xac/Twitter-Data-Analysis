@@ -46,6 +46,12 @@ class Clean_Tweets:
         favorite_count etc to numbers
         """
         self.df = self.df.copy()
+        # Convert polarity
+        self.df.loc[:,"polarity"] = pd.to_numeric(self.df["polarity"],errors='coerce')
+        # Convert subjectivity
+        self.df.loc[:,"subjectivity"] = pd.to_numeric(self.df["subjectivity"],errors='coerce')
+        # Convert friends_cout
+        self.df.loc[:,"friends_count "] = pd.to_numeric(self.df["polarity"],errors='coerce')
         # Convert retweet_count
         self.df.loc[:,'retweet_count'] = pd.to_numeric(self.df['retweet_count'],errors='coerce')
         # Convert favorite_count
