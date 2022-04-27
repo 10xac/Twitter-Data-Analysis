@@ -58,6 +58,7 @@ class Clean_Tweets:
         self.df = df.query("lang == 'en' ")
 
         return self.df
+        
 
 
 if __name__ == "__main__":

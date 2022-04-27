@@ -45,6 +45,18 @@ class TweetDfExtractor:
     def find_full_text(self) -> list:
         text = [item['text'] for item in self.tweets_list]
         return text
+    
+    def find_sentiment(self, polarity, subjectivity) -> list:
+        sentiment = []
+        for i in range(len(polarity)):
+            if polarity[i] > 0:
+                sentiment.append(1)
+            elif polarity[i] < 0:
+                sentiment.append(0)
+            else:
+                sentiment.append(-1)
+
+        return sentiment
 
     def find_sentiments(self, text) -> list:
         polarity, subjectivity = [], []
@@ -129,7 +141,7 @@ class TweetDfExtractor:
     def get_tweet_df(self, save=False) -> pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
 
-        columns = ['created_at', 'source', 'original_text', 'polarity', 'subjectivity', 'lang', 'favorite_count',
+        columns = ['created_at', 'source', 'original_text', 'sentiment', 'polarity', 'subjectivity', 'lang', 'favorite_count',
                    'retweet_count',
                    'original_author', 'followers_count', 'friends_count', 'possibly_sensitive', 'hashtags',
                    'user_mentions', 'place']
@@ -138,6 +150,7 @@ class TweetDfExtractor:
         source = self.find_source()
         text = self.find_full_text()
         polarity, subjectivity = self.find_sentiments(text)
+        sentiment = self.find_sentiment(polarity, subjectivity)
         lang = self.find_lang()
         fav_count = self.find_favourite_count()
         retweet_count = self.find_retweet_count()
@@ -149,14 +162,14 @@ class TweetDfExtractor:
         mentions = self.find_mentions()
         location = self.find_location()
 
-        items = [created_at, source, text, polarity, lang, fav_count, retweet_count, screen_name, follower_count,
+        items = [created_at, source, text, polarity, sentiment, lang, fav_count, retweet_count, screen_name, follower_count,
                  friends_count, sensitivity, hashtags, mentions, location]
 
         for i, item in enumerate(items):
             if len(item) == 1:
                 print("empty array: ", i)
 
-        data = zip(created_at, source, text, polarity, subjectivity,
+        data = zip(created_at, source, text, polarity, subjectivity,sentiment,
                    lang, fav_count, retweet_count, screen_name, follower_count,
                    friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
