@@ -1,4 +1,4 @@
-import json
+git resimport json
 import pandas as pd
 from textblob import TextBlob
 
@@ -50,16 +50,16 @@ class TweetDfExtractor:
         polarity = []
         subjectivity = []
         for i in text:
-            blob = TextBlob(i)
-            sentiment = blob.sentiment
-            polarity.append(sentiment.polarity)
-            subjectivity.append(sentiment.subjectivity)
+            if (i):
+                polarity.append(TextBlob(str(i)).polarity)
+                subjectivity.append(TextBlob(str(i)).subjectivity)
         return polarity, subjectivity
 
     def find_created_time(self)->list:
         created_at = []
         for i in self.tweets_list:
             created_at.append(i.get('created_at', None))
+
         return created_at
 
     def find_source(self)->list:
@@ -146,16 +146,14 @@ class TweetDfExtractor:
         lang = [i.get('lang', None) for i in self.tweets_list]
         return lang
 
-    
-        
         
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
         
-        columns = ['created_at', 'source', 'original_text','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
+        columns = ['statuses_count', 'created_at', 'source', 'original_text','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
             'screen_name', 'followers_count','friends_count','sensitivity', 'hashtags', 'user_mentions', 'place']
         
-
+        statuses_count = self.find_statuses_count()
         created_at = self.find_created_time()
         source = self.find_source()
         text = self.find_full_text()
@@ -170,7 +168,7 @@ class TweetDfExtractor:
         hashtags = self.find_hashtags()
         mentions = self.find_mentions()
         location = self.find_location()
-        data = zip(created_at, source, text, polarity, subjectivity, \
+        data = zip(statuses_count, created_at, source, text, polarity, subjectivity, \
                 lang, fav_count, retweet_count, screen_name, follower_count, \
                 friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
@@ -187,10 +185,9 @@ if __name__ == "__main__":
     columns = ['statuses_count', 'created_at', 'source', 'original_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
      'screen_name','followers_count','friends_count','sensitivity', 'hashtags', 'user_mentions', 'place']
     # _, tweet_list = read_json("../Economic_Twitter_Data.json")
-    _, tweet_list = read_json("./Twitter-Data-Analysis/data/Economic_Twitter_Data.json")
+    _, tweet_list = read_json("/home/codeally/project/Twitter-Data-Analysis/data/Economic_Twitter_Data.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df(True) 
 
 
     # use all defined functions to generate a dataframe with the specified columns above
-
