@@ -1,2 +1,12 @@
 pandas>=1.1.0
 textblob>=0.15.3
+importlib-metadata==4.8.3
+importlib-resources==5.4.0
+joblib==1.1.0
+nltk==3.6.7
+numpy==1.19.5
+python-dateutil==2.8.2
+pytz==2022.1
+regex==2022.4.24
+six==1.16.0
+click==8.0.4
