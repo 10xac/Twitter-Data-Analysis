@@ -24,7 +24,8 @@ jobs:
     steps:
       - name: update repo
         uses: actions/checkout@v2
-      - name: Set up Python version
+      - name: Set Up Python version
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Extract Economic Twitter Data from zip to json
