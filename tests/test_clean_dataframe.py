@@ -20,9 +20,15 @@ class TestCleanTweet(unittest.TestCase):
         df = self.clean_tweet.drop_duplicate(self.df)
         self.assertTrue(not self.df.duplicated().any())
 
+    # def test_convert_to_datetime(self):
+    #     df = self.clean_tweet.convert_to_datetime(self.df)
+    #     self.assertTrue(type(df['Created_at'].dtype == ptypes.DateTimeTZPtype))
     def test_convert_to_datetime(self):
         df = self.clean_tweet.convert_to_datetime(self.df)
-        self.assertTrue(type(self.df['Created_at'].dtype == ptypes.DateTimeTZPtype))
+        created = [Fri Apr 22 22:20:18 +0000 2022, Fri Apr 22 22:19:16 +0000 2022,  
+                    Apr 22 22:17:28 +0000 2022, Fri Apr 22 22:17:20 +0000 2022, Fri Apr 22 22:13:15 +0000 2022]
+        self.assertEqual(self.df['Created_at'][:5], created)
+
 
     # def test_convert_to_numbers(self):
     #     df = self.clean_tweet.convert_to_numbers(self.df)
