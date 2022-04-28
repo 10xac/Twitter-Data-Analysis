@@ -15,12 +15,11 @@ on:
 #   contents: read
 
 jobs:
-  tests:
-
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # Run in all these versions of Python
+        #Try different versions of Python
         python-version: [ 3.6, 3.8, 3.9 ]
     steps:
       - uses: actions/checkout@v2
