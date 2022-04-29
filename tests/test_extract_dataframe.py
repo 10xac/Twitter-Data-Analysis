@@ -2,14 +2,12 @@ import unittest
 import pandas as pd
 import sys, os
  
-# sys.path.append(os.path.abspath(os.path.join('../..')))
 sys.path.append(os.path.abspath(os.path.join('..')))
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
 
-# exec(open("/home/codeally/project/Twitter-Data-Analysis/extract_dataframe.py").read())
 
-_, tweet_list = read_json('/home/codeally/project/Twitter-Data-Analysis/data/Economic_Twitter_Data.json')
+_, tweet_list = read_json('/data/Economic_Twitter_Data.json')
 
 columns = ['statuses_count', 'created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
             'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']

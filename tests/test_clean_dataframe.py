@@ -22,17 +22,16 @@ class TestCleanTweet(unittest.TestCase):
 
     # def test_convert_to_datetime(self):
     #     df = self.clean_tweet.convert_to_datetime(self.df)
-    #     self.assertTrue(type(df['Created_at'].dtype == ptypes.DateTimeTZPtype))
-    def test_convert_to_datetime(self):
-        df = self.clean_tweet.convert_to_datetime(self.df)
-        created = [Fri Apr 22 22:20:18 +0000 2022, Fri Apr 22 22:19:16 +0000 2022,  
-                    Apr 22 22:17:28 +0000 2022, Fri Apr 22 22:17:20 +0000 2022, Fri Apr 22 22:13:15 +0000 2022]
-        self.assertEqual(self.df['Created_at'][:5], created)
+        # self.assertTrue(type(df['Created_at'].dtype == ptypes.DateTimeTZPtype))
+        # self.assertTrue(ptypes.is_datetime64_any_dtype(df['created_at']))
 
-
-    # def test_convert_to_numbers(self):
-    #     df = self.clean_tweet.convert_to_numbers(self.df)
-    #     self.assertTrue(ptypes.is_numeric_dtype(df['polarity']))
-    #     self.assertTrue(ptypes.is_numeric_dtype(df['subjectivity']))
-    #     self.assertTrue(ptypes.is_numeric_dtype(df['retweet_count']))
-    #     self.assertTrue(ptypes.is_numeric_dtype(df['favorite_count']))
+    def test_convert_to_numbers(self):
+        df = self.clean_tweet.convert_to_numbers(self.df)
+        self.assertTrue(ptypes.is_numeric_dtype(df['polarity']))
+        self.assertTrue(ptypes.is_numeric_dtype(df['subjectivity']))
+        self.assertTrue(ptypes.is_numeric_dtype(df['retweet_count']))
+        self.assertTrue(ptypes.is_numeric_dtype(df['favorite_count']))
+    
+    def test_remove_non_english_tweet(self):
+        df = self.clean_tweet.remove_non_english_tweets(self.df)
+        self.assertTrue(len(df.columns) == 15)
