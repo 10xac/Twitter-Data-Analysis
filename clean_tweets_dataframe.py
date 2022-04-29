@@ -1,25 +1,30 @@
 import pandas as pd
 
 
-class Clean_Tweets:
+class CleanTweets:
     """
-    The PEP8 Standard AMAZING!!!
+    This class is responsible for cleaning the twitter dataframe
+
+    Returns:
+    --------
+    A dataframe
     """
 
     def __init__(self, df: pd.DataFrame):
         self.df = df
         print('Automation in Action...!!!')
 
-    def drop_unwanted_column(self, df: pd.DataFrame) -> pd.DataFrame:
+    def drop_unwanted_column(self) -> pd.DataFrame:
         """
         remove rows that has column names. This error originated from
         the data collection stage.  
         """
-        unwanted_rows = df[df['retweet_count'] == 'retweet_count'].index
-        df.drop(unwanted_rows, inplace=True)
-        df = df[df['polarity'] != 'polarity']
+        unwanted_rows = self.df[self.df['retweet_count']
+                                == 'retweet_count'].index
+        self.df.drop(unwanted_rows, inplace=True)
+        self.df = self.df[self.df['polarity'] != 'polarity']
 
-        return df
+        return self.df
 
     def drop_duplicate(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -41,7 +46,7 @@ class Clean_Tweets:
 
         return self.df
 
-    def convert_to_numbers(self, df: pd.DataFrame) -> pd.DataFrame:
+    def convert_to_numbers(self) -> pd.DataFrame:
         """
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
@@ -60,11 +65,14 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
 
-        self.df = self.df.query("lang == 'en' ")
+        index_names = self.df[self.df['lang'] != "en"].index
+
+        self.df.drop(index_names, inplace=True)
+        self.df.reset_index(drop=True, inplace=True)
 
         return self.df
 
 
 if __name__ == "__main__":
     tweet_df = pd.read_csv("processed_tweet_data.csv")
-    cleaner = Clean_Tweets(tweet_df)
+    cleaner = CleanTweets(tweet_df)
