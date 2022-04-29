@@ -1,9 +1,14 @@
+from calendar import c
+from distutils.util import subst_vars
+import pandas as pd
+import nltk
+
+
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
     """
-#     import pandas library
-    import pandas as pd
+    
     def __init__(self, df:pd.DataFrame):
         self.df = df
         print('Automation in Action...!!!')
@@ -24,7 +29,7 @@ class Clean_Tweets:
         drop duplicate rows
         """
 #    fixed bug     
-        df = df.drop_duplicates(subset-None, keep=False, inplace=True)
+        df = df.drop_duplicates(subst_vars-None, keep=False, inplace=True)
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
@@ -32,7 +37,7 @@ class Clean_Tweets:
         convert column to datetime
         """
 #         fixed bug
-        df['created_at'] = pd.to_datetime(df['created_at'],format = %Y%m%d)
+        df['created_at'] = pd.to_datetime(df['created_at'])
         
         df = df[df['created_at'] >= '2020-12-31' ]
         
@@ -58,8 +63,8 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
 #         check and verify tweet is in english language
-        import ntlk
-        words=set(ntlk.corpus.words.words())
-        df = df['lang.join(r for r in ntlk.wordpunct_tokenize(df['lang'])if r.lower()in words or not r.isalpha())']
+        
+        words=set(nltk.corpus.words.words())
+        df = df['lang'].join(r for r in nltk.wordpunct_tokenize(df['lang']) if r.lower() in words or not r.isalpha())
         
         return df
