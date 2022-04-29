@@ -30,7 +30,8 @@ class Clean_Tweets:
         convert column to datetime
         """
         self.df['created_at'] = self.df['created_at'].apply(lambda x : pd.to_datetime(x))
-        
+        # df['created_at'] = pd.to_datetime(df['created_at'], dayfirst=True)
+
         self.df = self.df[self.df['created_at'] >= '2020-12-31' ]
         
         return self.df
@@ -51,10 +52,6 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
         
-        self.df = self.df[self.df.lang == 'en'].drop('lang', axis=1).reset_index()
+        self.df = self.df[self.df.lang == 'en'].drop('lang', axis=1).reset_index(drop = True)
         
         return self.df
-
-df_2 = pd.read_csv('processed_tweet_data.csv')
-a = Clean_Tweets(df_2)
-print(a.df)
