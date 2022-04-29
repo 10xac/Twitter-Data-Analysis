@@ -1,1 +1,3 @@
 __pycache__/
+data/Economic_Twitter_Data.json
+.travis.yml

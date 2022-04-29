@@ -1,23 +1,13 @@
 # Twitter-Data-Analysis
 
-### So here are the bare minimum requirement for completing this task
+## What Is Twitter Data?
 
-1. Fork repository to your github account
-2. Create a branch called “fix_bug” to fix the bugs in the fix_clean_tweets_dataframe.py and fix_extract_dataframe.py 
-3. In branch `fix_bug` copy or rename `fix_clean_tweets_dataframe.py` to `clean_tweets_dataframe.py` and `fix_extract_dataframe.py`  to `extract_dataframe.py` 
-4. Fix the bugs on `clean_tweets_dataframe.py` and `extract_dataframe.py` 
-5. Multiple times push the code you are working on to git, and once the fix is complete, merge the `fix_bug` branch to master
-6. Create a new branch called `make_unittest` for creating a new unit test for extract_dataframe.py code.
-7. After completing the unit test writing, merge  “make_unittest”  to main branch
-8. In all cases when you merge, make sure you first do Pull Request, review, then accept the merge.
-9. Setup Github Actions CI to your repository such that when you git push new code (or merge a branch) to the main branch, the unit test in tests/*.py runs automatically. 10. All tests should pass.
+![phone with logo](https://insidebusiness.ng/wp-content/uploads/twitter-1.jpg)
 
-After Completing this Challenge, you would have explore  
+Twitter data is the information collected by either the user, the access point, what’s in the post and how users view or use your post. While this might sound somewhat vague, it’s largely due to the massive amount of data that can be collected from a single Tweet.
 
-- Unittesting
-- Modular Coding
-- Software Engineering Best Practices
-- Python Package Structure
-- Bug Fix (Debugging)
+With this information, you can know demographics, total clicks on your profile or how many people saw your Tweet. This is just the tip of the iceberg, but understanding the data allows you to know how it’s used and the patterns of your content.
 
-Have Fun and Cheers
+---
+
+![logo](https://logos-world.net/wp-content/uploads/2020/04/Twitter-Logo-2010-2012.png)
