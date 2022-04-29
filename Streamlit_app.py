@@ -16,7 +16,8 @@ import streamlit as st
 tweet_df = pd.read_csv("clean_preprocessed.csv")
 
 st.title("Tweeter Data Analysis Challenge")
-st.write('''The aim of this challenge is to analyze data from Twitter to extract any insightful information. 
+st.sidebar.subheader("Description of the challenge")
+st.sidebar.write('''The aim of this challenge is to analyze data from Twitter to extract any insightful information. 
     The main objective is to understand and/or have a view on the opinions of Internet users regarding economic difficulties.''')
 st.markdown("**The cleaned data set**")
 st.write(tweet_df.head())
@@ -67,15 +68,18 @@ hashcount = hashtags_list.value_counts()
 
 # lot the occurences of each hashtag
 st.markdown("**Most used hashtags**")
-fig = px.bar(hashcount,x=hashcount.index[:10],y=hashcount.values[:10],labels={'x':'Hashtag','y':'# of occurence'},
+num_hash=st.number_input("Top number of used hashtags",min_value=3,max_value=50,value=10)
+fig = px.bar(hashcount,x=hashcount.index[:num_hash],y=hashcount.values[:num_hash],labels={'x':'Hashtag','y':'# of occurence'},
     title="Most used hashtag")
 st.plotly_chart(fig)
 
 # Word cloud
 st.markdown("**Current words in the tweets**")
+max_num_word=st.number_input(label='Maximum number of words to plot',min_value=20,max_value=500,value=50)
+word_cloud_title=st.text_input("Title of the word cloud",value='Most Frequent Words In Our Tweets')
 plt.figure(figsize=(20, 10))
-plt.imshow(WordCloud(width=1000,height=600,stopwords=STOPWORDS,max_words=50,background_color="white").generate(' '.join(tweet_df.preproc_text .values)))
+plt.imshow(WordCloud(width=1000,height=600,stopwords=STOPWORDS,max_words=max_num_word,background_color="white").generate(' '.join(tweet_df.preproc_text .values)))
 plt.axis('off')
-plt.title('Most Frequent Words In Our Tweets',fontsize=16)
+plt.title(word_cloud_title,fontsize=16)
 #plt.show()
 st.pyplot(plt)
