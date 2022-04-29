@@ -42,13 +42,21 @@ class TweetDfExtractor:
         
     def find_full_text(self)->list:
         text = [value['text']for value in self.tweets_list]
+<<<<<<< HEAD
         clean_text = [word.lower() for word in text if word not in punctuation]
+=======
+        clean_text = ''.join([word for word in text.lower() if word not in punctuation])
+>>>>>>> 8d857d43ecfe5ea206f51bb26d1da8571f8e89e0
         return text,clean_text
        
     
     def find_sentiments(self, text)->list:
         subjectivity = [TextBlob(data['text']).sentiment.subjectivity for data in self.tweets_list]
+<<<<<<< HEAD
         polarity = [TextBlob(data['text']).sentiment.polarity for data in self.tweets_list]
+=======
+        polarity = [TextBlob(data['text']).sentiment.polarity for data in data[1]]
+>>>>>>> 8d857d43ecfe5ea206f51bb26d1da8571f8e89e0
         
         return polarity, subjectivity
 
@@ -151,6 +159,7 @@ if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place']
+<<<<<<< HEAD
     _, tweet_list = read_json("data/Economic_Twitter_Data/Economic_Twitter_Data.json")
     tweet = TweetDfExtractor(tweet_list)
     df = tweet.get_tweet_df() 
@@ -161,6 +170,11 @@ if __name__ == "__main__":
     df = clean.remove_non_english_tweets(df)
     df.to_csv('processed_tweet_data.csv', index=False)
     print('File Successfully Saved.!!!')
+=======
+    _, tweet_list = read_json("data/Twitter-Data-Analysis/Twitter-Data-Analysis.json")
+    tweet = TweetDfExtractor(tweet_list)
+    tweet_df = tweet.get_tweet_df() 
+>>>>>>> 8d857d43ecfe5ea206f51bb26d1da8571f8e89e0
 
     # use all defined functions to generate a dataframe with the specified columns above
     
