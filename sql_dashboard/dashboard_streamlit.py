@@ -72,7 +72,7 @@ sent_over_time = px.line(df_tweet_date, x=df_tweet_date.index, y=['polarity', 's
 
 # Top 10 Hashtags by language (default: english)
 
-hashtag_df = df_selection[['original_text', 'hashtags']]
+hashtag_df = df_selection[['cleaned_text', 'hashtags']]
 
 
 def find_hashtags(df_selection):
@@ -80,7 +80,7 @@ def find_hashtags(df_selection):
     return re.findall('(#[A-Za-z]+[A-Za-z0-9-_]+)', df_selection)
 
 
-hashtag_df['hashtag_check'] = df_tweet.original_text.apply(find_hashtags)
+hashtag_df['hashtag_check'] = df_tweet.cleaned_text.apply(find_hashtags)
 
 hashtag_df.dropna(subset=['hashtags', 'hashtag_check'], inplace=True)
 tags_list = list(hashtag_df['hashtag_check'])
