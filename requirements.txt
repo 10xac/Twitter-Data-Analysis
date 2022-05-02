@@ -4,3 +4,4 @@ matplotlib==3.4.3
 streamlit==1.7.0
 wordcloud==1.8.1
 seaborn==0.11.2
+plotly==5.1.0
