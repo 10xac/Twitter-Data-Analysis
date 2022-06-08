@@ -18,5 +18,7 @@ cache:
 
 # Command to run tests, e.g. python setup.py test
 script:
-  - python -m unittest tests.test_extract_dataframe
-  - python -m unittest tests.test_clean_tweets_dataframe
+  - cd tests/ 
+  - python3 test_extract_dataframe.py
+  # - python -m unittest tests.test_extract_dataframe
+  # - python -m unittest tests.test_clean_tweets_dataframe

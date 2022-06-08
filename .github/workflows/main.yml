@@ -1,0 +1,30 @@
+# Refs:
+# * https://docs.github.com/en/actions/quickstart
+# * https://www.youtube.com/playlist?list=PL_RrEj88onS-um2xFy01sY46ik_2yt_EQ
+
+name: GitHub Actions Demo # what this file is for
+on: [push] # run when there's a git push to GitHub
+# on:
+#   push:
+#     branches:
+jobs: # list of jobs to do
+  Explore-GitHub-Actions: # name of this current job
+    runs-on: ubuntu-latest # Operating System to run on
+    steps: # Things to do
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      # - name: Run test_clean_tweets
+      #   run: python -m unittest tests/test_clean_tweets.py
+      - name: Run test_extract_dataframe
+        run: python -m unittest tests/test_extract_dataframe.py
+      - run: echo "🍏 This job's status is ${{ job.status }}."
